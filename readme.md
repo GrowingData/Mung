@@ -1,0 +1,1 @@
+Mung is an event based logging & reporting system that enables SQL based querying of data.
