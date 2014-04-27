@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.Client", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.Server", "GrowingData.Mung.Server\GrowingData.Mung.Server.csproj", "{CABC02D1-2DF5-460D-9170-6CC1B7E5E90D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.Tester", "GrowingData.Mung.Tester\GrowingData.Mung.Tester.csproj", "{A8663820-8793-4F83-BCBF-3298B7BE1139}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CABC02D1-2DF5-460D-9170-6CC1B7E5E90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CABC02D1-2DF5-460D-9170-6CC1B7E5E90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CABC02D1-2DF5-460D-9170-6CC1B7E5E90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8663820-8793-4F83-BCBF-3298B7BE1139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8663820-8793-4F83-BCBF-3298B7BE1139}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8663820-8793-4F83-BCBF-3298B7BE1139}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8663820-8793-4F83-BCBF-3298B7BE1139}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

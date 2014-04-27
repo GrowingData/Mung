@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MUNG Firehose</title>
+
+	<script src="/Scripts/jquery-1.6.4.js"></script>
+	<script src="/Scripts/jquery.signalR-2.0.3.js"></script>
+
+
+</head>
+<body>
+	<style>
+		body {
+			font-family: Consolas, monospace;
+			font-size: 12px;
+		}
+
+		li {
+			list-style-type: none;
+			margin-bottom: 8px;
+		}
+	</style>
+
+	<div class="container body-content">
+
+		<h1>Firehose</h1>
+
+
+		<ul class="events"></ul>
+
+
+		<script type="text/javascript">
+			var ul = $(".events");
+
+			var connectionState = {
+				connecting: 0,
+				connected: 1,
+				reconnecting: 2,
+				disconnected: 4
+			};
+
+			$(document).ready(function () {
+				var cn = $.connection('https://events.mung.gd/log/read');
+
+				cn.received(function (data) {
+					$("<li>")
+						.text(JSON.stringify(data))
+						.prependTo(ul);
+				});
+				cn.stateChanged(function (state) {
+					console.log("Connection state: " + JSON.stringify(state));
+					
+					if (state.newState == connectionState.connected) {
+						cn.send({ type: "stream" });
+					}
+				});
+				
+
+				cn.start();
+			});
+
+		</script>
+		<hr />
+		<footer>
+			<p>&copy; MUNG 2014</p>
+		</footer>
+	</div>
+
+</body>
+</html>
