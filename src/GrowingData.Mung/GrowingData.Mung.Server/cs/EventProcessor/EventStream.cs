@@ -12,8 +12,8 @@ using Newtonsoft.Json;
 
 namespace GrowingData.Mung.Server {
 	public class EventStream : ConnectedEventProcessor {
-		public EventStream(IConnection connection, string connectionId)
-			: base("EventStream", connection, connectionId) {
+		public EventStream(EventPipeline pipeline, IConnection connection, string connectionId)
+			: base(pipeline, "EventStream", connection, connectionId) {
 
 		}
 

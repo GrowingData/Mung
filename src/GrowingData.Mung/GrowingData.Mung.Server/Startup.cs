@@ -22,7 +22,8 @@ namespace GrowingData.Mung.Server {
 
 			app.MapSignalR();
 
-			EventSink.Sink.AddProcessor(new RelationalEventProcessor(PathManager.DataPath));
+
+			MungState.App.Pipeline.AddProcessor(new RelationalEventProcessor(MungState.App.Pipeline, PathManager.DataPath));
 
 			Task.Run(() => {
 				// If the app shut down without properly disposing of the file

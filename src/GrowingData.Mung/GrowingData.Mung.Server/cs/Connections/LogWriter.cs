@@ -19,7 +19,7 @@ namespace GrowingData.Mung.Server {
 
 			var message = new MungServerEvent(data);
 
-			EventSink.Sink.Process(message);
+			EventPipeline.Sink.Process(message);
 
 			return base.OnReceived(request, connectionId, data);
 		}

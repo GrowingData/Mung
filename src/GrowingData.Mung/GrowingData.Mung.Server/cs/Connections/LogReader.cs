@@ -15,7 +15,7 @@ namespace GrowingData.Mung.Server {
 			dynamic d = JObject.Parse(data);
 
 			if (d.type == "stream") {
-				EventSink.Sink.AddProcessor(new EventStream(Connection, connectionId));
+				MungState.App.Pipeline.AddProcessor(new EventStream(MungState.App.Pipeline, Connection, connectionId));
 			}
 
 
@@ -34,7 +34,7 @@ namespace GrowingData.Mung.Server {
 
 
 		protected override Task OnDisconnected(IRequest request, string connectionId) {
-			EventSink.Sink.Disconnect(connectionId);
+			MungState.App.Pipeline.Disconnect(connectionId);
 			return base.OnDisconnected(request, connectionId);
 
 

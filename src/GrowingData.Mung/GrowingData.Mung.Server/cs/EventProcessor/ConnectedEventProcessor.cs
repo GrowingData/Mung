@@ -13,8 +13,8 @@ namespace GrowingData.Mung.Server {
 		public string ConnectionId { get { return _connectionId; } }
 
 
-		public ConnectedEventProcessor(string name, IConnection connection, string connectionId)
-			: base(name) {
+		public ConnectedEventProcessor(EventPipeline pipeline, string name, IConnection connection, string connectionId)
+			: base(pipeline, name) {
 
 			_connection = connection;
 			_connectionId = connectionId;

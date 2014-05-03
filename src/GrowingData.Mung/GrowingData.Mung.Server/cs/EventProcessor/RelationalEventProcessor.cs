@@ -20,8 +20,8 @@ namespace GrowingData.Mung.Server {
 
 
 
-		public RelationalEventProcessor(string basePath)
-			: base("RelationalEventWriter") {
+		public RelationalEventProcessor(EventPipeline pipeline, string basePath)
+			: base(pipeline, "RelationalEventWriter") {
 			_relationizer = new RelationalSchema(basePath);
 
 		}

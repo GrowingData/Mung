@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0A4F9299-1FFE-415C-85F7-831CA541CD8F}</ProjectGuid>
+    <ProjectGuid>{B6135D49-41A1-4707-99DF-06F14EBD26C1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrowingData.Mung.Core</RootNamespace>
-    <AssemblyName>GrowingData.Mung.Core</AssemblyName>
+    <RootNamespace>GrowingData.Mung.MetricJs</RootNamespace>
+    <AssemblyName>GrowingData.Mung.MetricJs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,14 +29,18 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jint">
+      <HintPath>..\packages\Jint.2.4.0\lib\portable-net40+sl50+win+wpa81+wp80\Jint.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\packages\StackExchange.Redis.1.0.333\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,29 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IO\MungedDataReader.cs" />
-    <Compile Include="IO\MungedDataWriter.cs" />
-    <Compile Include="Model\DbColumn.cs" />
-    <Compile Include="Model\DbTable.cs" />
-    <Compile Include="Model\DbType.cs" />
-    <Compile Include="Model\MungServerEvent.cs" />
-    <Compile Include="Model\TimePeriod.cs" />
-    <Compile Include="Processing\EventProcessor.cs" />
-    <Compile Include="Processing\EventPipeline.cs" />
+    <Compile Include="MetricJs\PeriodMetric.cs" />
+    <Compile Include="MetricJs\PersistentMetric.cs" />
+    <Compile Include="MetricJs\PersistentMetricDb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\Hashing.cs" />
-    <Compile Include="Utilities\PathManager.cs" />
-    <Compile Include="Utilities\RandomString.cs" />
-    <Compile Include="Utilities\StreamExtensions.cs" />
+    <Compile Include="Redis\Redis.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
-      <Project>{e3b83d68-c90c-4874-8e5f-dec8d038bc7c}</Project>
-      <Name>LumenWorks.Framework.IO</Name>
+    <ProjectReference Include="..\GrowingData.Mung.Core\GrowingData.Mung.Core.csproj">
+      <Project>{0a4f9299-1ffe-415c-85f7-831ca541cd8f}</Project>
+      <Name>GrowingData.Mung.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

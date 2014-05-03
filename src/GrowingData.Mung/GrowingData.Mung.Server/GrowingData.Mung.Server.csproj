@@ -101,12 +101,12 @@
     <Compile Include="cs\Connections\LogReader.cs" />
     <Compile Include="cs\Connections\LogWriter.cs" />
     <Compile Include="cs\EventProcessor\ConnectedEventProcessor.cs" />
-    <Compile Include="cs\EventProcessor\EventProcessor.cs" />
-    <Compile Include="cs\EventProcessor\EventSink.cs" />
     <Compile Include="cs\EventProcessor\EventStream.cs" />
     <Compile Include="cs\EventProcessor\RelationalEventProcessor.cs" />
+    <Compile Include="cs\Model\IMungServer.cs" />
+    <Compile Include="cs\Model\MungState.cs" />
+    <Compile Include="cs\Model\Mung.cs" />
     <Compile Include="cs\Model\Db.cs" />
-    <Compile Include="cs\Model\MungServerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
