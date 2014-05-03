@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C3676AB8-F623-4181-86FD-21EFADF5B0F9}</ProjectGuid>
+    <ProjectGuid>{7FD0973F-7449-4F4C-A5AF-9E88DA3AD020}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GrowingData.Mung.Client</RootNamespace>
-    <AssemblyName>GrowingData.Mung.Client</AssemblyName>
+    <RootNamespace>GrowingData.Mung.SqlBatch</RootNamespace>
+    <AssemblyName>GrowingData.Mung.SqlBatch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -29,14 +31,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.AspNet.SignalR.Client">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.0.3\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,16 +45,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\LogClient.cs" />
-    <Compile Include="Client\Mung.cs" />
-    <Compile Include="Client\MungEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BulkInsert\SqlServerBulkInserter.cs" />
+    <Compile Include="BulkInsert\BulkInserter.cs" />
+    <Compile Include="Watcher\SqlBatchChecker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GrowingData.Mung.Core\GrowingData.Mung.Core.csproj">
+      <Project>{ba8e93c3-c6a7-4465-8a8d-8aa8b8d68a78}</Project>
+      <Name>GrowingData.Mung.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GrowingData.Mung.Relationizer\GrowingData.Mung.Relationizer.csproj">
+      <Project>{9ebb510c-94ca-433d-845b-de9e6091aead}</Project>
+      <Name>GrowingData.Mung.Relationizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
+      <Project>{e3b83d68-c90c-4874-8e5f-dec8d038bc7c}</Project>
+      <Name>LumenWorks.Framework.IO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using GrowingData.Mung.Core;
+using GrowingData.Mung.Relationizer;
 
 
 
@@ -15,20 +16,20 @@ namespace GrowingData.Mung.Server {
 		private object _sync = new object();
 
 		// Holds all our state for 
-		private Relationizer _relationizer;
+		private RelationalSchema _relationizer;
 
 
 
 		public RelationalEventProcessor(string basePath)
 			: base("RelationalEventWriter") {
-			_relationizer = new Relationizer(basePath);
+			_relationizer = new RelationalSchema(basePath);
 
 		}
 
 
 
 		protected override void ProcessEvent(MungServerEvent evt) {
-			_relationizer.Write(evt);
+			_relationizer.Write(evt.Token, evt.Type);
 
 
 		}
