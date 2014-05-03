@@ -3,3 +3,4 @@ bin
 packages
 *.suo
 *.user
+/src/GrowingData.Mung/GrowingData.Mung.Server/data/**

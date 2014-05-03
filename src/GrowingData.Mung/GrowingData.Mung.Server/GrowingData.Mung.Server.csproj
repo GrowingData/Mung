@@ -97,14 +97,29 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections\ConnectionManager.cs" />
-    <Compile Include="Connections\LogReader.cs" />
-    <Compile Include="Connections\LogWriter.cs" />
-    <Compile Include="EventProcessor\ConnectedEventProcessor.cs" />
-    <Compile Include="EventProcessor\EventProcessor.cs" />
-    <Compile Include="EventProcessor\EventSink.cs" />
-    <Compile Include="EventProcessor\EventStream.cs" />
-    <Compile Include="Model\MungServerEvent.cs" />
+    <Compile Include="cs\Connections\ConnectionManager.cs" />
+    <Compile Include="cs\Connections\LogReader.cs" />
+    <Compile Include="cs\Connections\LogWriter.cs" />
+    <Compile Include="cs\EventProcessor\ConnectedEventProcessor.cs" />
+    <Compile Include="cs\EventProcessor\EventProcessor.cs" />
+    <Compile Include="cs\EventProcessor\EventSink.cs" />
+    <Compile Include="cs\EventProcessor\EventStream.cs" />
+    <Compile Include="cs\EventProcessor\RelationalEventProcessor.cs" />
+    <Compile Include="cs\IO\MungedDataReader.cs" />
+    <Compile Include="cs\IO\MungedDataWriter.cs" />
+    <Compile Include="cs\Model\MungServerEvent.cs" />
+    <Compile Include="cs\Relationizer\DbColumn.cs" />
+    <Compile Include="cs\Relationizer\DbTable.cs" />
+    <Compile Include="cs\Relationizer\DbType.cs" />
+    <Compile Include="cs\Relationizer\JsonReader.cs" />
+    <Compile Include="cs\Relationizer\RelationalEvent.cs" />
+    <Compile Include="cs\Relationizer\RelationalEventFile.cs" />
+    <Compile Include="cs\Relationizer\RelationalEventWriter.cs" />
+    <Compile Include="cs\Relationizer\Relationizer.cs" />
+    <Compile Include="cs\Utilities\Hashing.cs" />
+    <Compile Include="cs\Utilities\PathManager.cs" />
+    <Compile Include="cs\Utilities\RandomString.cs" />
+    <Compile Include="cs\Utilities\StreamExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -112,6 +127,10 @@
     <ProjectReference Include="..\GrowingData.Mung.Core\GrowingData.Mung.Core.csproj">
       <Project>{0a4f9299-1ffe-415c-85f7-831ca541cd8f}</Project>
       <Name>GrowingData.Mung.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LumenWorks.Framework.IO\LumenWorks.Framework.IO.csproj">
+      <Project>{e3b83d68-c90c-4874-8e5f-dec8d038bc7c}</Project>
+      <Name>LumenWorks.Framework.IO</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

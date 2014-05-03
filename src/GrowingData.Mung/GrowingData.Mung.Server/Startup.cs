@@ -20,6 +20,7 @@ namespace GrowingData.Mung.Server {
 
 			app.MapSignalR();
 
+			EventSink.Sink.AddProcessor(new RelationalEventProcessor(PathManager.DataPath));
 
 		}
 
