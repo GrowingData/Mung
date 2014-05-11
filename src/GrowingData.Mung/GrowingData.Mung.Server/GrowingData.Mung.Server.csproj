@@ -96,10 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="static\js\lib\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.min.js" />
     <Content Include="static\js\lib\jquery-1.6.4.js" />
     <Content Include="static\js\lib\jquery-1.6.4.min.js" />
+    <Content Include="static\js\lib\jquery.signalR-2.0.3.js" />
+    <Content Include="static\js\lib\jquery.signalR-2.0.3.min.js" />
     <Content Include="static\js\mung\MUNG.EventSubscription.js" />
     <Content Include="static\js\mung\MUNG.MetricSubscription.js" />
     <Content Include="user\html\metric.html" />
@@ -108,16 +108,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cs\Connections\LogReader.cs" />
-    <Compile Include="cs\Connections\LogWriter.cs" />
-    <Compile Include="cs\EventProcessor\ConnectedEventProcessor.cs" />
-    <Compile Include="cs\EventProcessor\EventStream.cs" />
-    <Compile Include="cs\EventProcessor\RelationalEventProcessor.cs" />
-    <Compile Include="cs\EventWatchers\JavascriptMetricConnection.cs" />
-    <Compile Include="cs\Model\IMungServer.cs" />
-    <Compile Include="cs\Model\MungState.cs" />
-    <Compile Include="cs\Model\MungApp.cs" />
-    <Compile Include="cs\Model\Db.cs" />
+    <Compile Include="src\Connections\LogReader.cs" />
+    <Compile Include="src\Connections\LogWriter.cs" />
+    <Compile Include="src\EventProcessor\ConnectedEventProcessor.cs" />
+    <Compile Include="src\EventProcessor\EventStream.cs" />
+    <Compile Include="src\EventProcessor\RelationalEventProcessor.cs" />
+    <Compile Include="src\EventWatchers\JavascriptMetricConnection.cs" />
+    <Compile Include="src\Model\IMungServer.cs" />
+    <Compile Include="src\Model\MungState.cs" />
+    <Compile Include="src\Model\MungApp.cs" />
+    <Compile Include="src\Model\Db.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
