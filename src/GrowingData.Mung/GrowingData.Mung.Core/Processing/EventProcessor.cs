@@ -39,7 +39,8 @@ namespace GrowingData.Mung.Core {
 						try {
 							ProcessEvent(evt);
 						} catch (Exception ex) {
-
+							System.Diagnostics.Debug.WriteLine("Error processing event: ");
+							System.Diagnostics.Debug.WriteLine(ex.Message);
 
 
 						}

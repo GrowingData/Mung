@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -10,12 +11,44 @@ using GrowingData.Mung.Core;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
-
+using Newtonsoft.Json;
 
 
 namespace GrowingData.Mung.MetricJs {
 	public static class JsValueHelpers {
 
+
+		public static HashSet<string> GlobalProperties = new HashSet<string>(new string[] {
+			"Object", 
+			"Function", 
+			"Array", 
+			"String", 
+			"RegExp", 
+			"Number", 
+			"Boolean", 
+			"Date", 
+			"Math", 
+			"JSON", 
+			"Error", 
+			"EvalError", 
+			"RangeError", 
+			"ReferenceError", 
+			"SyntaxError", 
+			"TypeError", 
+			"URIError", 
+			"NaN", 
+			"Infinity", 
+			"undefined", 
+			"parseInt", 
+			"parseFloat", 
+			"isNaN", 
+			"isFinite", 
+			"decodeURI", 
+			"decodeURIComponent", 
+			"encodeURI", 
+			"encodeURIComponent", 
+			"eval"
+		});
 
 		public static object Uncast(this JsValue value) {
 			if (value.IsBoolean()) {
@@ -33,9 +66,10 @@ namespace GrowingData.Mung.MetricJs {
 
 			return null;
 		}
-		public static string ToJson(this JsValue value) {
-			var o = Uncast(value);
-			return Newtonsoft.Json.JsonConvert.SerializeObject(o);
-		}
+
+
+		//public static string ToJson(this JsValue value, Engine context) {
+		//	return context.Json.Stringify(value, new[] { value }).AsString();
+		//}
 	}
 }

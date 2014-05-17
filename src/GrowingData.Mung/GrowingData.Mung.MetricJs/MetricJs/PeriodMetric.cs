@@ -22,6 +22,7 @@ namespace GrowingData.Mung.MetricJs {
 	public class PeriodMetric {
 
 		private JavascriptContext _context;
+		private DateTime _currentPeriod = DateTime.MinValue;
 
 		private TimePeriod _period;
 		protected string _name;
@@ -35,6 +36,11 @@ namespace GrowingData.Mung.MetricJs {
 		public string ContextKey {
 			get {
 				return string.Format("persistent-metric|{0}|{1}-context", _name, _period.ToString());
+			}
+		}
+		public string ContextDateKey {
+			get {
+				return string.Format("persistent-metric|{0}|{1}-date", _name, _period.ToString());
 			}
 		}
 
@@ -75,7 +81,8 @@ In: {4}", _name,
 			var saved = LoadResultContext();
 
 			if (saved != null) {
-				_context.ExecuteFunction("init", new string[] { saved });
+
+				_context.ExecuteFunction("init", new[] { saved });
 			}
 		}
 
@@ -83,30 +90,63 @@ In: {4}", _name,
 
 
 		public double ProcessEvent(string evtJson) {
+			// Should we accumulate this metric for the current period, or should
+			// we reset the accumulator for the new period.
+
+			var currentPeriod = _period.StandardizeDate(DateTime.UtcNow);
+
+			if (currentPeriod != _currentPeriod) {
+				if (_currentPeriod != DateTime.MinValue) {
+					// Get the terminated value for this period
+					JsValue terminationJsValue = _context.ExecuteFunction("terminate");
+					var terminationValue = terminationJsValue.AsNumber();
+					// Store it in the database for this period / TimePeriod
+					StoreResultValue(_currentPeriod, terminationValue);
+
+					// Reset the current value
+					_context.ExecuteFunction("reset");
+				}
+				_currentPeriod = currentPeriod;
+			}
+
 			JsValue v = _context.ExecuteFunction("accumulate", new string[] { evtJson });
 			var value = v.AsNumber();
-			StoreResultValue(value);
+
+
+			// Update the "current" context we have for this value, so if the process
+			// restarts, it can restore its state.
+			StoreResultContext();
 
 			return value;
 		}
 
 
-		public void StoreResultValue(double value) {
-			var score = (double)_period.StandardizeDate(DateTime.UtcNow).Ticks;
+		public void StoreResultValue(DateTime period, double value) {
+			var score = (double)period.Ticks;
 			SortedSetEntry sse = new SortedSetEntry(value, score);
 			RedisClient.Current.Database.SortedSetAdd(ValuesKey, new[] { sse });
 		}
 
 		public void StoreResultContext() {
 			JsValue v = _context.ExecuteFunction("save", new string[] { });
-			var json = JsonConvert.SerializeObject(v);
+			var json = _context.ToJson(v);
 			RedisClient.Current.Database.StringSet(ContextKey, json);
+			RedisClient.Current.Database.StringSet(ContextDateKey, _currentPeriod.ToString("o"));
 
 		}
 
 		public string LoadResultContext() {
-			string json = RedisClient.Current.Database.StringGet(ContextKey);
-			return json;
+			// Only load the actual context if the period is still active.
+			var strDate = RedisClient.Current.Database.StringGet(ContextDateKey);
+			DateTime contextDate = DateTime.MinValue;
+			if (DateTime.TryParse(strDate, out contextDate)) {
+				var currentPeriod = _period.StandardizeDate(DateTime.UtcNow);
+				if (contextDate == currentPeriod) {
+					string json = RedisClient.Current.Database.StringGet(ContextKey);
+					return json;
+				}
+			}
+			return null;
 		}
 
 

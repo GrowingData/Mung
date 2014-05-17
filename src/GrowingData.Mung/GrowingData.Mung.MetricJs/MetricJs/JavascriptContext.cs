@@ -17,7 +17,8 @@ using Jint.Native.Object;
 
 namespace GrowingData.Mung.MetricJs {
 	public class JavascriptException : Exception {
-		public JavascriptException(string message, Exception inner) {
+		public JavascriptException(string message, Exception inner)
+			: base(message, inner) {
 
 		}
 	}
@@ -38,7 +39,21 @@ namespace GrowingData.Mung.MetricJs {
 			_errorMessageContext = errorMessageContext;
 			_initialJavascript = script;
 
+
+
 			Initialize(_initialJavascript);
+
+		}
+		public string ToJson(JsValue value) {
+			var json = _engine.Json.Stringify(value, new[] { value });
+			if (json.IsString()) {
+				return json.AsString();
+			}
+			return null;
+		}
+		public JsValue FromJson(string json) {
+			var jj = new JsValue(json);
+			return _engine.Json.Parse(jj, new[] { jj });
 
 		}
 
@@ -69,6 +84,9 @@ E.g. `(function () { return this; })();`
 				}
 			}
 		}
+		public JsValue ExecuteFunction(string name) {
+			return ExecuteFunction(name, new string[] { });
+		}
 
 		public JsValue ExecuteFunction(string name, string[] arguments) {
 			var parameters = ParseParameters(name, arguments);
@@ -78,11 +96,11 @@ E.g. `(function () { return this; })();`
 				try {
 					JsValue result = fn.Invoke(parameters);
 
-					System.Diagnostics.Debug.WriteLine("ExecuteFn: {0} => {1} ToString", name, result.ToJson());
+					System.Diagnostics.Debug.WriteLine("ExecuteFn: {0} => {1} ToString", name, ToJson(result));
 					return result;
 
 				} catch (Exception ex) {
-					var details = string.Format(@"Error, unable to execute function {0}:
+					var details = string.Format(@"Error, unable to execute function '{0}':
 Parameters:
 ------
 {1}
@@ -111,17 +129,25 @@ In: {4}
 			JsValue fn;
 			try {
 				fn = mng.Get(name);
+
+				if (fn.IsUndefined()) {
+					throw new Exception(string.Format("Function '{0}' is undefined.", name));
+				}
+				if (fn.IsNull()) {
+					throw new Exception(string.Format("Function '{0}' is null.", name));
+				}
+				if (!fn.IsObject()) {
+					throw new Exception(string.Format("Function '{0}' is not a function.", name));
+				}
 				return fn;
 			} catch (Exception ex) {
-				var details = string.Format(@"Error, unable to find function {0}:
+				var details = string.Format(@"Error, unable to find function '{0}':
 Initial script Javascript:
 ------
-{0}
+{1}
 ------
 Message: {2}
-Function target: {3}
-In: {4}
-
+In: {3}
 ",
 				name,
 				_initialJavascript,
@@ -142,7 +168,7 @@ In: {4}
 					parameters.Add(input);
 					parameterNumber++;
 				} catch (Exception ex) {
-					var details = string.Format(@"Error, unable to parse parameter {0}:
+					var details = string.Format(@"Error, unable to parse parameter '{0}':
 Parameter JSON {0}:
 ------
 {1}
