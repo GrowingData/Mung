@@ -14,13 +14,12 @@ namespace GrowingData.Mung.Tester {
 			while (true) {
 
 
+				count++;
 				MUNG.Client.WriteDirect("console", "test", new {
 					name = "tez",
 					count = count
 				});
-				count++;
 				Console.WriteLine("Wrote event: {0}", count);
-				Thread.Sleep(500);
 
 				Console.ReadKey();
 			}

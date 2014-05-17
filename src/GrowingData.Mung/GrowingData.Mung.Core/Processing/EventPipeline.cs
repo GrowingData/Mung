@@ -9,10 +9,6 @@ using GrowingData.Mung.Core;
 
 namespace GrowingData.Mung.Core {
 	public class EventPipeline {
-
-		private static EventPipeline _sink = new EventPipeline();
-		public static EventPipeline Sink { get { return _sink; } }
-
 		private ConcurrentDictionary<string, EventProcessor> _active;
 
 		public EventPipeline() {

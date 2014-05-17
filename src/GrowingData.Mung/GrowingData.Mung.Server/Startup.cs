@@ -5,8 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 using Microsoft.AspNet.SignalR;
+
+
 using GrowingData.Mung.Core;
 using GrowingData.Mung.SqlBatch;
+using GrowingData.Mung.Relationizer;
+using GrowingData.Mung.MetricJs;
 
 [assembly: OwinStartupAttribute(typeof(GrowingData.Mung.Server.Startup))]
 namespace GrowingData.Mung.Server {
@@ -23,7 +27,12 @@ namespace GrowingData.Mung.Server {
 			app.MapSignalR();
 
 
-			MungState.App.Pipeline.AddProcessor(new RelationalEventProcessor(MungState.App.Pipeline, PathManager.DataPath));
+			MungState.App.Pipeline.AddProcessor(new RelationalEventProcessor(PathManager.DataPath));
+
+			var metricPath = Path.Combine(PathManager.BasePath, "user", "js-metric");
+			var metrics = new JavascriptMetricFactory(metricPath, MungState.App.Pipeline);
+
+			metrics.Reload();
 
 			Task.Run(() => {
 				// If the app shut down without properly disposing of the file
@@ -32,14 +41,12 @@ namespace GrowingData.Mung.Server {
 				SqlBatchChecker.CleanUpOldFiles(PathManager.DataPath, Db.Warehouse);
 			});
 
-
 			Task.Run(() => {
 				while (true) {
 					Thread.Sleep(1000 * 60 * 10);
 					SqlBatchChecker.Check(PathManager.DataPath, Db.Warehouse);
 				}
 			});
-
 		}
 
 	}

@@ -3,15 +3,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace GrowingData.Mung.Core {
 	public class MungServerEvent {
 
 
 		public DateTime LogTime;
-		public object Data;
 		public JToken Token;
+		public JToken Data;
 		public string Type;
 		public string Source;
 
@@ -20,12 +19,12 @@ namespace GrowingData.Mung.Core {
 		}
 		public MungServerEvent(string json) {
 
-			var firstToken = JToken.Parse(json);
+			Token = JToken.Parse(json);
 
-			LogTime = (DateTime) firstToken["LogTime"];
-			Source = (string)firstToken["Source"];
-			Type = (string)firstToken["Type"];
-			Token = firstToken["Data"];
+			LogTime = (DateTime)Token["LogTime"];
+			Source = (string)Token["Source"];
+			Type = (string)Token["Type"];
+			Data = Token["Data"];
 		}
 	}
 }

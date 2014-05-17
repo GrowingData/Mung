@@ -27,21 +27,19 @@
 
 	<div class="container body-content">
 
-		<h1>Firehose</h1>
+		<h1>Metric</h1>
 
-
-		<ul class="events"></ul>
+		<h1 class="metric-value"></h1>
 
 
 		<script type="text/javascript">
 			$(function () {
 				var ul = $(".events");
-				var subs = new MUNG.EventSubscription({
+				var subs = new MUNG.MetricSubscription({
 					filter: function (evt) { return true; },
-					received: function (evt) {
-						$("<li>")
-							.text(JSON.stringify(evt))
-							.prependTo(ul);
+					name: "test-sum",
+					updated: function (evt) {
+						$(".metric-value").text(evt.Periods.Minutes);
 					}
 				});
 			});

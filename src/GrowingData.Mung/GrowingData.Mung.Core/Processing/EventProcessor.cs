@@ -15,14 +15,12 @@ namespace GrowingData.Mung.Core {
 		private string _name;
 		public string Name { get { return _name; } }
 
-		protected EventPipeline _pipeline;
 
-		public EventProcessor(EventPipeline pipeline, string name) {
+		public EventProcessor(string name) {
 			_id = new Guid();
 			_name = name;
 			_events = new ConcurrentQueue<MungServerEvent>();
-			_pipeline = pipeline;
-			
+
 			Task.Factory.StartNew(() => PumpQueue(), TaskCreationOptions.LongRunning);
 		}
 
