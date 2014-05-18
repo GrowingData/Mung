@@ -37,6 +37,7 @@ namespace GrowingData.Mung.Core {
 					MungServerEvent evt;
 					if (_events.TryDequeue(out evt)) {
 						try {
+							
 							ProcessEvent(evt);
 						} catch (Exception ex) {
 							System.Diagnostics.Debug.WriteLine("Error processing event: ");

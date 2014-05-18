@@ -7,7 +7,7 @@
 
 	<script src="/static/js/lib/jquery-1.6.4.js"></script>
 	<script src="/static/js/lib/jquery.signalR-2.0.3.js"></script>
-	<script src="/static/js/mung/MUNG.MetricSubscription.js"></script>
+	<script src="/static/js/mung/MUNG.MetricConnection.js"></script>
 
 
 
@@ -29,17 +29,25 @@
 
 		<h1>Metric</h1>
 
-		<h1 class="metric-value"></h1>
+		<div class="metric-value"></div>
 
 
 		<script type="text/javascript">
 			$(function () {
 				var ul = $(".events");
-				var subs = new MUNG.MetricSubscription({
-					filter: function (evt) { return true; },
+				var metricConnection = new MUNG.MetricConnection({});
+
+				metricConnection.listen({
 					name: "test-sum",
+					keyFilter: "country=au&state=*",
 					updated: function (evt) {
-						$(".metric-value").text(evt.Periods.Hours);
+
+						for (var i = 0; i < evt.metrics.length; i++) {
+							var items = $("<div>")
+								.text(JSON.stringify(evt.metrics[i]))
+								.appendTo($(".metric-value"));
+						}
+
 					}
 				});
 			});

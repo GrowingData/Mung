@@ -6,5 +6,6 @@
 	this.terminate = function () { return this.sum; };
 	this.reset = function () { this.sum = 0; };
 	this.save = function () { return this; };
+	this.dimensions = function () { return ["country", "state"]; }
 	return this;
 })();

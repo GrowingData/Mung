@@ -19,21 +19,26 @@ namespace GrowingData.Mung.Server {
 
 
 			if (d.type == "js-metric") {
-				if (string.IsNullOrEmpty((string)d.aggregator)) {
-					// Watching a persistent metric
-					var watcher = new JavascriptMetricWatcher(MungState.App.Pipeline,
-						(string)d.name,
-						Connection,
-						connectionId);
-				} else {
+				var jsId = (string)d.id;
+				var keyFilter = (string)d.keyFilter;
 
-					// Watching a live / demo metric
-					var watcher = new JavascriptMetricWatcher(MungState.App.Pipeline,
-						(string)d.aggregator,
-						(string)d.name,
-						Connection,
-						connectionId);
-				}
+				//if (string.IsNullOrEmpty((string)d.aggregator)) {
+				// Watching a persistent metric
+				var watcher = new JavascriptMetricConnection(MungState.App.Pipeline,
+					(string)d.name,
+					Connection,
+					connectionId,
+					jsId,
+					keyFilter);
+				//} else {
+
+				//	// Watching a live / demo metric
+				//	var watcher = new JavascriptMetricWatcher(MungState.App.Pipeline,
+				//		(string)d.aggregator,
+				//		(string)d.name,
+				//		Connection,
+				//		connectionId);
+				//}
 			}
 
 

@@ -12,11 +12,13 @@ using Microsoft.AspNet.SignalR;
 
 
 namespace GrowingData.Mung.Server {
-	public class JavascriptMetricWatcher {
+	public class JavascriptMetricConnection {
 
 
 		private IConnection _connection;
 		private string _connectionId;
+		private string _javascriptId;
+		private string _keyFilter;
 
 
 		public string ConnectionId { get { return _connectionId; } }
@@ -29,8 +31,9 @@ namespace GrowingData.Mung.Server {
 		/// <param name="name"></param>
 		/// <param name="connection"></param>
 		/// <param name="connectionId"></param>
-		public JavascriptMetricWatcher(EventPipeline pipeline, string jsAggregator, string name, IConnection connection, string connectionId) {
+		public JavascriptMetricConnection(EventPipeline pipeline, string jsAggregator, string name, IConnection connection, string connectionId, string javascriptId) {
 			_connection = connection;
+			_javascriptId = javascriptId;
 			_connectionId = connectionId;
 
 			var jsMetric = new JavascriptMetric(name, jsAggregator);
@@ -47,9 +50,15 @@ namespace GrowingData.Mung.Server {
 		/// <param name="name"></param>
 		/// <param name="connection"></param>
 		/// <param name="connectionId"></param>
-		public JavascriptMetricWatcher(EventPipeline pipeline, string name, IConnection connection, string connectionId) {
+		public JavascriptMetricConnection(EventPipeline pipeline, string name, IConnection connection, string connectionId, string javascriptId, string keyFilter) {
 			_connection = connection;
 			_connectionId = connectionId;
+			_javascriptId = javascriptId;
+			_keyFilter = keyFilter;
+
+			if (string.IsNullOrEmpty(_keyFilter)) {
+				_keyFilter = "*";
+			}
 
 			// Try to find the metric, and add a watcher
 			var processor = pipeline.GetProcessor(name);
@@ -68,9 +77,18 @@ namespace GrowingData.Mung.Server {
 
 		}
 
-		public void Updated(JaascriptMetricUpdate d) {
-			_connection.Send(_connectionId, d);
+		public void Updated(List<JavascriptMetricUpdate> updates) {
 
+			var filterMatching = updates
+				.Where(x => x.Filter.Like(_keyFilter));
+
+			if (filterMatching.Count() > 0) {
+				_connection.Send(_connectionId, new {
+					id = _javascriptId,
+					keyFilter = _keyFilter,
+					metrics = filterMatching
+				});
+			}
 		}
 
 	}

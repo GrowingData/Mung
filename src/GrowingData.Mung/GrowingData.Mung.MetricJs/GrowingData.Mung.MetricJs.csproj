@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MetricJs\JavascriptContext.cs" />
+    <Compile Include="MetricJs\MetricFilter.cs" />
     <Compile Include="MetricJs\JsValueHelper.cs" />
     <Compile Include="MetricJs\JavascriptMetricFactory.cs" />
     <Compile Include="MetricJs\PeriodMetric.cs" />

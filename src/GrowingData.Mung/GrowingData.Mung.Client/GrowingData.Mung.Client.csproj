@@ -52,6 +52,7 @@
     <Compile Include="Client\LogClient.cs" />
     <Compile Include="Client\Mung.cs" />
     <Compile Include="Client\MungEvent.cs" />
+    <Compile Include="Client\SimpleTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

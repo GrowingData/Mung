@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
@@ -41,7 +42,10 @@ namespace GrowingData.Mung.Client {
 				if (_connection.State == ConnectionState.Connected) {
 					while (_q.TryDequeue(out msg)) {
 						try {
-							_connection.Send(msg);
+							SimpleTimer.DebugTime("event-send", () => {
+								_connection.Send(msg);
+							});
+							Debug.WriteLine("MUNG: sent: " + JsonConvert.SerializeObject(msg));
 						} catch (Exception ex) {
 							System.Diagnostics.Debug.WriteLine(string.Format("MUNG: Unable to send event: {0}", ex.Message));
 						}
@@ -74,6 +78,13 @@ namespace GrowingData.Mung.Client {
 				}
 			}
 		}
+		public void WaitUntilQueueEmpty() {
+			while (_q.Count > 0) {
+				Thread.Sleep(10);
+			}
+
+		}
+
 		public void Write(string source, string type, dynamic data) {
 			_q.Enqueue(new MungEvent() {
 				Data = data,

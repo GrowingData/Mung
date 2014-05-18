@@ -62,7 +62,9 @@
     <Compile Include="Utilities\Hashing.cs" />
     <Compile Include="Utilities\PathManager.cs" />
     <Compile Include="Utilities\RandomString.cs" />
+    <Compile Include="Utilities\SimpleTimer.cs" />
     <Compile Include="Utilities\StreamExtensions.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

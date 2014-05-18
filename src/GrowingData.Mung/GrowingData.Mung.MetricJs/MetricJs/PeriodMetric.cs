@@ -20,62 +20,48 @@ using Jint.Native.Object;
 
 namespace GrowingData.Mung.MetricJs {
 	public class PeriodMetric {
+		public static string BaseKey(string name, TimePeriod period, string filter) {
+			return string.Format("persistent-metric|{0}|{1}|=>{2}", name, period.ToString(), filter);
+		}
 
 		private JavascriptContext _context;
 		private DateTime _currentPeriod = DateTime.MinValue;
 
 		private TimePeriod _period;
 		protected string _name;
+		protected string _filter;
 
 
 		public string ValuesKey {
 			get {
-				return string.Format("persistent-metric|{0}|{1}", _name, _period.ToString());
+				return BaseKey(_name, _period, _filter);
 			}
 		}
 		public string ContextKey {
 			get {
-				return string.Format("persistent-metric|{0}|{1}-context", _name, _period.ToString());
+				return BaseKey(_name, _period, _filter) + "|context";
 			}
 		}
 		public string ContextDateKey {
 			get {
-				return string.Format("persistent-metric|{0}|{1}-date", _name, _period.ToString());
+				return BaseKey(_name, _period, _filter) + "|date";
 			}
 		}
 
 
 
-		public PeriodMetric(string name, string jsAggregator, TimePeriod period) {
+		public PeriodMetric(string name, string jsAggregator, string filter, TimePeriod period) {
 			_name = name;
-			var javascriptErrorMessageContext = string.Format("{0} ({1})", _name, "Metric Aggregator");
-			_context = new JavascriptContext(jsAggregator, javascriptErrorMessageContext);
+			_filter = filter;
 			_period = period;
+
+			var javascriptErrorMessageContext = string.Format("{0} ({1})", _name, "Metric Aggregator");
+
+			_context = new JavascriptContext(jsAggregator, javascriptErrorMessageContext);
 
 			Initialize();
 		}
 
-		public bool PassesFilter(string evtJson) {
-			JsValue v = _context.ExecuteFunction("filter", new string[] { evtJson });
-
-			if (!v.IsBoolean()) {
-
-				var details = string.Format(@"Error, unable to test filter for {0}, filter did not return a boolean value:
-Initial script Javascript:
-------
-{1}
-------
-
-Message: {3}
-In: {4}", _name,
-			_context.JavaScript);
-
-				throw new Exception(details);
-			}
-
-			return v.AsBoolean();
-
-		}
 
 		public void Initialize() {
 			var saved = LoadResultContext();

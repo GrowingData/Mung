@@ -101,7 +101,7 @@
     <Content Include="static\js\lib\jquery.signalR-2.0.3.js" />
     <Content Include="static\js\lib\jquery.signalR-2.0.3.min.js" />
     <Content Include="static\js\mung\MUNG.EventSubscription.js" />
-    <Content Include="static\js\mung\MUNG.MetricSubscription.js" />
+    <Content Include="static\js\mung\MUNG.MetricConnection.js" />
     <Content Include="user\html\metric.html" />
     <Content Include="user\html\firehose.html" />
     <Content Include="user\js-metric\test-sum.js" />

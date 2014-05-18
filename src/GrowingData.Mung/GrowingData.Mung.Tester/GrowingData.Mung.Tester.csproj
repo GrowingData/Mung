@@ -60,6 +60,10 @@
       <Project>{c3676ab8-f623-4181-86fd-21efadf5b0f9}</Project>
       <Name>GrowingData.Mung.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GrowingData.Mung.MetricJs\GrowingData.Mung.MetricJs.csproj">
+      <Project>{b6135d49-41a1-4707-99df-06f14ebd26c1}</Project>
+      <Name>GrowingData.Mung.MetricJs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
