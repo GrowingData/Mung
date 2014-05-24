@@ -17,31 +17,34 @@ namespace GrowingData.Mung.Server {
 
 		private IConnection _connection;
 		private string _connectionId;
+		private TimePeriod _timePeriod;
 		private string _javascriptId;
 		private string _keyFilter;
 
 
 		public string ConnectionId { get { return _connectionId; } }
 
-		/// <summary>
-		/// Create a new, ephermal metric to watch
-		/// </summary>
-		/// <param name="pipeline"></param>
-		/// <param name="jsAggregator"></param>
-		/// <param name="name"></param>
-		/// <param name="connection"></param>
-		/// <param name="connectionId"></param>
-		public JavascriptMetricConnection(EventPipeline pipeline, string jsAggregator, string name, IConnection connection, string connectionId, string javascriptId) {
-			_connection = connection;
-			_javascriptId = javascriptId;
-			_connectionId = connectionId;
+		///// <summary>
+		///// Create a new, ephermal metric to watch
+		///// </summary>
+		///// <param name="pipeline"></param>
+		///// <param name="jsAggregator"></param>
+		///// <param name="name"></param>
+		///// <param name="connection"></param>
+		///// <param name="connectionId"></param>
+		//public JavascriptMetricConnection(EventPipeline pipeline, string jsAggregator, string name, IConnection connection, string connectionId, string javascriptId) {
+		//	_connection = connection;
+		//	_javascriptId = javascriptId;
+		//	_connectionId = connectionId;
 
-			var jsMetric = new JavascriptMetric(name, jsAggregator);
+		//	var jsMetric = new JavascriptMetric(name, jsAggregator);
 
-			jsMetric.Updated(connectionId, Updated);
+		//	jsMetric.Updated(connectionId, Updated);
 
-			pipeline.AddProcessor(jsMetric);
-		}
+		//	pipeline.AddProcessor(jsMetric);
+
+		//	SendUpdates();
+		//}
 
 		/// <summary>
 		/// Bind to an existing metric given by "name"
@@ -50,11 +53,12 @@ namespace GrowingData.Mung.Server {
 		/// <param name="name"></param>
 		/// <param name="connection"></param>
 		/// <param name="connectionId"></param>
-		public JavascriptMetricConnection(EventPipeline pipeline, string name, IConnection connection, string connectionId, string javascriptId, string keyFilter) {
+		public JavascriptMetricConnection(EventPipeline pipeline, string name, IConnection connection, string connectionId, string javascriptId, string keyFilter, TimePeriod period) {
 			_connection = connection;
 			_connectionId = connectionId;
 			_javascriptId = javascriptId;
-			_keyFilter = keyFilter;
+			_timePeriod = period;
+			_keyFilter = PeriodMetric.BaseKey(name, _timePeriod, keyFilter);
 
 			if (string.IsNullOrEmpty(_keyFilter)) {
 				_keyFilter = "*";
@@ -74,7 +78,7 @@ namespace GrowingData.Mung.Server {
 
 			jsMetric.Updated(_connectionId, Updated);
 
-
+			SendUpdates();
 		}
 
 		public void Updated(List<JavascriptMetricUpdate> updates) {
@@ -88,7 +92,15 @@ namespace GrowingData.Mung.Server {
 					keyFilter = _keyFilter,
 					metrics = filterMatching
 				});
+				SendUpdates();
 			}
+		}
+
+		public void SendUpdates() {
+			// When an update has been triggered, we need to get the data from redis
+			// and send the whole lot to the client.
+			var values = RedisClient.Current.MatchingValues(_keyFilter);
+
 		}
 
 	}

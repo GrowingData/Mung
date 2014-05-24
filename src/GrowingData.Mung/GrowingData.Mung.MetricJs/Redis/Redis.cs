@@ -40,6 +40,25 @@ namespace GrowingData.Mung.MetricJs {
 
 		}
 
+		public IEnumerable<string> MatchingKeys(string search) {
+			var server = _redisConnection.GetServer(_redisConnection.GetEndPoints()[0]);
+			foreach (var k in server.Keys(pattern: search, pageSize: 10)) {
+				yield return k.ToString();
+			}
+		}
+
+		public IEnumerable<RedisValue> MatchingValues(string search) {
+			var keys = MatchingKeys(search);
+
+			return GetMany(keys);
+		}
+		public List<RedisValue> GetMany(IEnumerable<string> cacheKeys) {
+			var values = _db.StringGet(cacheKeys.Select(x => (RedisKey)x).ToArray())
+					.ToList();
+
+			return values;
+		}
+
 		static byte[] Serialize<T>(T o) {
 			if (o == null) {
 				return null;
