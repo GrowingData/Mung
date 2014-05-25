@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNet.SignalR;
+using GrowingData.Mung.Core;
 
 namespace GrowingData.Mung.Server {
 	public class LogReader : PersistentConnection {
@@ -21,6 +22,7 @@ namespace GrowingData.Mung.Server {
 			if (d.type == "js-metric") {
 				var jsId = (string)d.id;
 				var keyFilter = (string)d.keyFilter;
+				var strTimePeriod = (string)d.timePeriod;
 
 				//if (string.IsNullOrEmpty((string)d.aggregator)) {
 				// Watching a persistent metric
@@ -29,7 +31,8 @@ namespace GrowingData.Mung.Server {
 					Connection,
 					connectionId,
 					jsId,
-					keyFilter);
+					keyFilter,
+					(TimePeriod)Enum.Parse(typeof(TimePeriod), strTimePeriod));
 				//} else {
 
 				//	// Watching a live / demo metric
