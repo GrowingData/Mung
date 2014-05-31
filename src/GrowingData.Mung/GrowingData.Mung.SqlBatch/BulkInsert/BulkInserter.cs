@@ -24,29 +24,35 @@ namespace GrowingData.Mung.SqlBatch {
 		protected BulkInserter(string schema, string filename) {
 			var info = new FileInfo(filename);
 
+
 			_schema = schema;
-			_table = info.Name.Split('.').First().Replace("complete-", ""); 
+			_table = info.Name.Split('.').First()
+				.Replace("complete-", "")
+				.Replace("active-", "")
+				.Replace("failed-", "");
+
 			_filename = filename;
 		}
 
 		public bool Execute() {
 
 			using (var stream = File.OpenText(_filename)) {
-				var reader = new MungedDataReader(stream);
+				using (var reader = new MungedDataReader(stream)) {
 
-				var currentSchema = new DbTable(_table, reader);
-				var oldSchema = GetDbSchema();
+					var currentSchema = new DbTable(_table, reader);
+					var oldSchema = GetDbSchema();
 
-				// Check / Update the schema in the DB
-				if (oldSchema == null) {
-					CreateTable(currentSchema);
-				} else {
-					ModifySchema(oldSchema, currentSchema);
+					// Check / Update the schema in the DB
+					if (oldSchema == null) {
+						CreateTable(currentSchema);
+					} else {
+						ModifySchema(oldSchema, currentSchema);
+					}
+
+					var newSchema = GetDbSchema();
+
+					BulkInsert(newSchema, reader);
 				}
-
-				var newSchema = GetDbSchema();
-
-				BulkInsert(newSchema, reader);
 
 			}
 			return true;

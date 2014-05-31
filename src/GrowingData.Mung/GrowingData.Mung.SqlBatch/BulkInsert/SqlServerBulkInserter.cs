@@ -14,6 +14,9 @@ namespace GrowingData.Mung.SqlBatch {
 			: base(schema, filename) {
 
 			_getConnection = cn;
+
+			// Make sure that the schema exists
+			CreateSchemaIfRequired(schema);
 		}
 
 		public override DbTable GetDbSchema() {
@@ -105,6 +108,17 @@ namespace GrowingData.Mung.SqlBatch {
 		public bool SameColumn(DbColumn a, DbColumn b) {
 			return a.Name.ToLowerInvariant() == b.Name.ToLowerInvariant();
 
+		}
+
+		public bool CreateSchemaIfRequired(string schemaName) {
+			var cmd = string.Format(@"
+				IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name='{0}')
+				BEGIN
+					EXEC('CREATE SCHEMA {0}')
+				END
+				", schemaName);
+			ExecuteCommand(cmd);
+			return true;
 		}
 
 

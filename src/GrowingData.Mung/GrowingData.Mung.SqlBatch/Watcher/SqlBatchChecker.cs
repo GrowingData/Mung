@@ -10,7 +10,17 @@ using GrowingData.Mung.Core;
 namespace GrowingData.Mung.SqlBatch {
 	public static class SqlBatchChecker {
 
+		public static void ResetLock(string dataPath) {
+			var lockFilePath = Path.Combine(dataPath, "sql-batch.lock");
+
+			if (File.Exists(lockFilePath)) {
+				File.Delete(lockFilePath);
+			}
+		}
+
 		public static void CleanUpOldFiles(string dataPath, Func<SqlConnection> fnConnection) {
+			ResetLock(dataPath);
+
 			Check("active-", dataPath, fnConnection);
 
 		}
@@ -30,7 +40,7 @@ namespace GrowingData.Mung.SqlBatch {
 		/// <param name="dataPath"></param>
 		/// <param name="fnConnection"></param>
 		/// <param name="moveWithError"></param>
-		private static void Check(string prefix, string dataPath, Func<SqlConnection> fnConnection) {
+		public static void Check(string prefix, string dataPath, Func<SqlConnection> fnConnection) {
 			var lockFilePath = Path.Combine(dataPath, "sql-batch.lock");
 
 			// Make sure we aren't already running...
@@ -43,12 +53,22 @@ namespace GrowingData.Mung.SqlBatch {
 
 				foreach (var file in Directory.EnumerateFiles(dataPath, prefix + "*")) {
 					try {
+						var loadedFileName = file.Replace("\\" + prefix, "\\loaded-");
+						if (File.Exists(loadedFileName)) {
+							// If we have already loaded it, just delete the old file
+							File.Delete(file);
+							System.Diagnostics.Debug.WriteLine("Skipped loading {0}, as it already has a loaded file", file);
+							continue;
+						}
 
+						System.Diagnostics.Debug.Write("Loading {0}...", file);
 						var sqlInsert = new SqlServerBulkInserter("dyn", file, fnConnection);
 						sqlInsert.Execute();
 
 						File.Move(file, file.Replace("\\" + prefix, "\\loaded-"));
 
+
+						System.Diagnostics.Debug.WriteLine(" Done.");
 					} catch (Exception ex) {
 						var exceptionLogPath = Path.Combine(dataPath, "sql-batch-exceptions.log");
 
@@ -81,9 +101,7 @@ namespace GrowingData.Mung.SqlBatch {
 
 
 			} finally {
-				if (File.Exists(lockFilePath)) {
-					File.Delete(lockFilePath);
-				}
+				ResetLock(dataPath);
 			}
 		}
 

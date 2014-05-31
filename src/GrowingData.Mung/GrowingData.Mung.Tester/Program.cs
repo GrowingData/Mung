@@ -14,7 +14,7 @@ namespace GrowingData.Mung.Tester {
 
 
 		static void Main(string[] args) {
-
+			Console.WriteLine("Running: {0}...", args[0]);
 			if (args[0] == "events") {
 				TestEventGeneration.Go();
 			}
@@ -24,7 +24,7 @@ namespace GrowingData.Mung.Tester {
 			if (args[0] == "sqlbatch") {
 				SqlBatchRunner.Go(args[1], args[2]);
 			}
-
+			Console.WriteLine("Done");
 			Console.ReadKey();
 		}
 

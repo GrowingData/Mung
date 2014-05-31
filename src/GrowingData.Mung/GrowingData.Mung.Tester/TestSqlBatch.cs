@@ -10,12 +10,19 @@ namespace GrowingData.Mung.Tester {
 	public class SqlBatchRunner {
 
 		public static void Go(string connectionString, string logPath) {
+			SqlBatchChecker.ResetLock(logPath);
+
+
 			Func<SqlConnection> fnCn = () => {
-				return new SqlConnection(connectionString);
+				var cn = new SqlConnection(connectionString);
+				cn.Open();
+				return cn;
 			};
 
 
-			SqlBatchChecker.Check(logPath, fnCn);
+			SqlBatchChecker.Check("failed-", logPath, fnCn);
+			SqlBatchChecker.Check("complete-", logPath, fnCn);
+			SqlBatchChecker.Check("active-", logPath, fnCn);
 		}
 
 	}

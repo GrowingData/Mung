@@ -65,6 +65,9 @@ namespace GrowingData.Mung.Core {
 			if (_types[fieldIndex] == DbType.DateTime) {
 				var dateTime = DateTime.MinValue;
 				if (DateTime.TryParse(val, out dateTime)) {
+					if (dateTime == DateTime.MinValue) {
+						return DBNull.Value;
+					}
 					return dateTime;
 				}
 				throw new FormatException(InvalidFormatErrorMessage(DbType.DateTime, fieldIndex, val));
@@ -79,11 +82,11 @@ namespace GrowingData.Mung.Core {
 			}
 
 			if (_types[fieldIndex] == DbType.Integer) {
-				var intValue = -1;
-				if (int.TryParse(val, out intValue)) {
+				long intValue = -1;
+				if (long.TryParse(val, out intValue)) {
 					return intValue;
 				}
-				throw new FormatException(InvalidFormatErrorMessage(DbType.Float, fieldIndex, val));
+				throw new FormatException(InvalidFormatErrorMessage(DbType.Integer, fieldIndex, val));
 			}
 
 
