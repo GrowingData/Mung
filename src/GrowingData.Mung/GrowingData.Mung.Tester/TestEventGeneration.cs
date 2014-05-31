@@ -40,7 +40,7 @@ namespace GrowingData.Mung.Tester {
 
 				var index = r.Next(0, testEvents.Count);
 
-				MUNG.Client.WriteDirect("console", "test-two", testEvents[index]);
+				MUNG.Client.Write("console", "test-two", testEvents[index]);
 				Console.WriteLine("Wrote event: {0}", count);
 				Console.ReadKey();
 
