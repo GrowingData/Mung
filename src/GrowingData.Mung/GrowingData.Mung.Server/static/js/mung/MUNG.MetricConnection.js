@@ -17,22 +17,78 @@ MUNG.MetricConnection = function (settings) {
 		};
 	}
 
-	this.listen = function (metric) {
-		var id = Math.random().toString().split('.')[1];
-		metric.id = id;
+	this.listen = function ($elem) {
+		var clientId = $elem.data("clientId");
+		if (!clientId) {
+			clientId = Math.random().toString().split('.')[1];
+			$elem.data("clientId", clientId);
+			$elem.addClass("mung-client-id-" + clientId);
+		}
 
-		_.metrics[id] = metric;
+
+		var serverMetric = {
+			Name: $elem.data("name"),
+			EventType: $elem.data("type"),
+			Aggregate: $elem.data("aggregate"),
+			Filter: $elem.data("filter"),
+			Group: $elem.data("group"),
+			Period: $elem.data("period")
+		};
+
+		var container = {
+			elem: $elem,
+			serverMetric: serverMetric,
+			ClientId: $elem.data("clientId")
+		}
+
+
+		this.metrics[clientId] = container;
 
 		if (_.state.newState == connectionState.connected) {
 			_.connection.send({
-				type: "js-metric",
-				name: metric.name,
-				id: metric.id,
-				keyFilter: metric.keyFilter
+				type: "metric",
+				clientId: container.ClientId,
+				metric: container.serverMetric
 			});
-			console.log("Sent subscription: " + metric.name);
+
+			console.log("Sent subscription: " + container.serverMetric.Name);
 
 		}
+	}
+
+	this.updated = function (container, data) {
+		console.log("Updatint: " + data.ClientId);
+
+		var elem = container.elem;
+		var ul = elem.find("ul.mung-values");
+		if (ul.length == 0) {
+			ul = $("<ul>").addClass("mung-values").appendTo(elem);
+		}
+
+		elem.find("li.value").addClass("unseen");
+
+		for (var i = 0; i < data.Metric.Values.length; i++) {
+			var v = data.Metric.Values[i];
+			var className = "g-" + hex_md5(v.Group);
+
+			var li = elem.find("li.value." + className);
+			if (li.length == 0) {
+				li = $("<li>")
+					.addClass("value")
+					.addClass("className")
+					.appendTo(ul);
+			}else{
+				li.removeClass("unseen");
+			}
+
+			$("<label>").addClass("added").text(decodeURIComponent(v.Group)).appendTo(li);
+			$("<div>").addClass("added").text(v.Value).appendTo(li);
+		}
+
+		// If ".unseen" hasn't been removed then we didnt
+		// have any values in the update, so we want to remove 
+		// the item.
+		elem.find("li.value.unseen").remove();
 	}
 
 
@@ -47,16 +103,15 @@ MUNG.MetricConnection = function (settings) {
 	this.connected = function () {
 		for (var k in _.metrics) {
 			// Make references to the metrics we are watching
-			var metric = _.metrics[k];
+			var container = _.metrics[k];
 
 			_.connection.send({
-				type: "js-metric",
-				name: metric.name,
-				id: metric.id,
-				keyFilter: metric.keyFilter
+				type: "metric",
+				clientId: container.ClientId,
+				metric: container.serverMetric
 			});
+			console.log("Sent subscription: " + container.serverMetric.Name);
 		}
-		console.log("Sent subscription");
 	}
 
 	function init() {
@@ -64,18 +119,22 @@ MUNG.MetricConnection = function (settings) {
 		_.connection = $.connection(_.settings.host + '/log/read');
 
 		_.connection.received(function (data) {
-			if (_.metrics[data.id]) {
-				_.metrics[data.id].updated(data);
-			}
+			if (data.Success) {
+				var container = _.metrics[data.ClientId];
 
+				if (container != null) {
+					_.updated(container, data);
+				}
+
+			} else {
+				console.log("An error occurred. clientId:" + data.ClientId + ", message: '" + data.Error + "'");
+			}
 			console.log("Updated.");
 		});
 
 
-		_.connection.start();
 
 		_.connection.reconnecting(function () {
-
 
 		});
 
@@ -100,6 +159,9 @@ MUNG.MetricConnection = function (settings) {
 				_.connected();
 			}
 		});
+
+
+		_.connection.start();
 	}
 
 

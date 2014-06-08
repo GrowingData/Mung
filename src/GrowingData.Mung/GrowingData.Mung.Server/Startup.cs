@@ -10,7 +10,7 @@ using Microsoft.AspNet.SignalR;
 using GrowingData.Mung.Core;
 using GrowingData.Mung.SqlBatch;
 using GrowingData.Mung.Relationizer;
-using GrowingData.Mung.MetricJs;
+using GrowingData.Mung.Metric;
 
 [assembly: OwinStartupAttribute(typeof(GrowingData.Mung.Server.Startup))]
 namespace GrowingData.Mung.Server {
@@ -29,8 +29,8 @@ namespace GrowingData.Mung.Server {
 
 			MungState.App.Pipeline.AddProcessor(new RelationalEventProcessor(PathManager.DataPath));
 
-			var metricPath = Path.Combine(PathManager.BasePath, "user", "js-metric");
-			var metrics = new JavascriptMetricFactory(metricPath, MungState.App.Pipeline);
+			var metricPath = Path.Combine(PathManager.BasePath, "user", "metric");
+			var metrics = new MetricFactory(metricPath, MungState.App.Pipeline);
 
 			metrics.Reload();
 
@@ -43,7 +43,7 @@ namespace GrowingData.Mung.Server {
 
 			Task.Run(() => {
 				while (true) {
-					Thread.Sleep(1000 * 60 * 10);
+					Thread.Sleep(1000 * 60 );
 					SqlBatchChecker.Check(PathManager.DataPath, Db.Warehouse);
 				}
 			});

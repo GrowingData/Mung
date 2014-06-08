@@ -23,7 +23,7 @@ namespace GrowingData.Mung.Tester {
 
 			var token = JToken.Parse(json);
 
-			foreach (var f in MetricFilter.Filters(string.Empty, token, new string[] { "country", "state", "city" })) {
+			foreach (var f in FilterBuilder.Filters(string.Empty, token, new string[] { "country", "state", "city" })) {
 				Console.WriteLine(f);
 			}
 

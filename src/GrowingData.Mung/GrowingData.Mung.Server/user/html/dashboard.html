@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MUNG Firehose</title>
+
+	<script src="/static/js/lib/jquery-1.6.4.js"></script>
+	<script src="/static/js/lib/jquery.signalR-2.0.3.js"></script>
+	<script src="/static/js/lib/md5.js"></script>
+	<script src="/static/js/mung/MUNG.MetricConnection.js"></script>
+
+
+
+</head>
+<body>
+	<style>
+		body {
+			font-family: Consolas, monospace;
+			font-size: 12px;
+		}
+
+		li {
+			list-style-type: none;
+			margin-bottom: 8px;
+		}
+	</style>
+
+	<div class="container body-content">
+
+		<h1>Dashboard</h1>
+
+		<ul class="cards">
+			<li class="card">
+				<h2>Top Pages</h2>
+				<div class="js-mung-metric-value"
+					data-name="top-pages-by-day"
+					data-type="request"
+					data-aggregate="Count()"
+					data-filter=""
+					data-period="Day"
+					data-group="url">
+				</div>
+			</li>
+
+		</ul>
+
+
+		<script type="text/javascript">
+			$(function () {
+				var ul = $(".events");
+				var metricConnection = new MUNG.MetricConnection({});
+
+				//metricConnection.listen($("#avg-requests"));
+				$(".js-mung-metric-value").each(function () {
+					metricConnection.listen($(this));
+				});
+			});
+		</script>
+		<hr />
+		<footer>
+			<p>&copy; MUNG 2014</p>
+		</footer>
+	</div>
+
+</body>
+</html>

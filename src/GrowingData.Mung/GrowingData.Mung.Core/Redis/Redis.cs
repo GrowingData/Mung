@@ -12,7 +12,7 @@ using StackExchange.Redis;
 using System.Configuration;
 using System.Threading;
 
-namespace GrowingData.Mung.MetricJs {
+namespace GrowingData.Mung.Core {
 	public class RedisClient {
 
 		private static RedisClient _current = new RedisClient();
@@ -33,10 +33,19 @@ namespace GrowingData.Mung.MetricJs {
 				}
 			}
 		}
-		public IDatabase Database { get { return _db; } }
+		public IDatabase Database {
+			get {
+				if (_db != null) {
+					return _db;
+				}
+
+				_db = RedisConnection.GetDatabase();
+
+				return _db;
+			}
+		}
 
 		public RedisClient() {
-			_db = RedisConnection.GetDatabase();
 
 		}
 

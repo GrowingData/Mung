@@ -43,6 +43,16 @@ namespace GrowingData.Mung.Server {
 				//		connectionId);
 				//}
 			}
+			if (d.type == "metric") {
+				var clientId = (string)d.clientId;
+				var metric = (string)d.metric.ToString();
+
+				var metricConnection = new MetricConnection(MungState.App.Pipeline,
+					Connection,
+					connectionId, 
+					metric,
+					clientId);
+			}
 
 
 			return base.OnReceived(request, connectionId, data);

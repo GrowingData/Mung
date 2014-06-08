@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using GrowingData.Mung.SqlBatch;
 using GrowingData.Mung.Client;
 using GrowingData.Mung.MetricJs;
+using System.Configuration;
 
 namespace GrowingData.Mung.Tester {
 	public class TestEventGeneration {
@@ -25,14 +26,15 @@ namespace GrowingData.Mung.Tester {
 				new TestType() { country = "au", state = "vic", count = 100 },
 				new TestType() {state = "vic", count = 100 }
 			};
+			var mungClient = new MungClient(ConfigurationManager.ConnectionStrings["MungServer"].ConnectionString);
 
 
 
-			MUNG.Client.Write("console", "test-two", new { });
-			MUNG.Client.Write("console", "test-two", new { country = "au", state = "nsw", count = 10 });
-			MUNG.Client.Write("console", "test-two", new { country = "au", state = "wa", count = 20 });
-			MUNG.Client.Write("console", "test-two", new { country = "au", state = "vic", count = 100 });
-			MUNG.Client.Write("console", "test-two", new { state = "vic", count = 100 });
+			mungClient.Write("console", "test-two", new { });
+			mungClient.Write("console", "test-two", new { country = "au", state = "nsw", count = 10 });
+			mungClient.Write("console", "test-two", new { country = "au", state = "wa", count = 20 });
+			mungClient.Write("console", "test-two", new { country = "au", state = "vic", count = 100 });
+			mungClient.Write("console", "test-two", new { state = "vic", count = 100 });
 			var r = new Random();
 
 			int count = 0;
@@ -40,14 +42,14 @@ namespace GrowingData.Mung.Tester {
 
 				var index = r.Next(0, testEvents.Count);
 
-				MUNG.Client.Write("console", "test-two", testEvents[index]);
+				mungClient.Write("console", "test-two", testEvents[index]);
 				Console.WriteLine("Wrote event: {0}", count);
 				Console.ReadKey();
 
 				count++;
 			}
 
-			MUNG.Client.WaitUntilQueueEmpty();
+			mungClient.WaitUntilQueueEmpty();
 			Console.WriteLine("Sent.");
 		}
 

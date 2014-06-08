@@ -14,14 +14,14 @@ using Newtonsoft.Json.Converters;
 
 
 
-namespace GrowingData.Mung.MetricJs {
+namespace GrowingData.Mung.Core {
 
 	/// <summary>
 	/// Builds 'filters' out of Json objects, eg:
 	///		new { country = "au", state = "vic", count = 100 }
 	///	
 	/// Would be represented as:
-	///		/country=au&state=vic
+	///		country=au&state=vic
 	///	
 	/// 
 	/// </summary>

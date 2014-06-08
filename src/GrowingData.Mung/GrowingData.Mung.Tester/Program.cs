@@ -24,6 +24,9 @@ namespace GrowingData.Mung.Tester {
 			if (args[0] == "sqlbatch") {
 				SqlBatchRunner.Go(args[1], args[2]);
 			}
+			if (args[0] == "json-exp") {
+				TestJsonExpressions.Go();
+			}
 			Console.WriteLine("Done");
 			Console.ReadKey();
 		}

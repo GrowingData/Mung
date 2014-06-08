@@ -23,10 +23,10 @@ namespace GrowingData.Mung.MetricJs {
 		string[] _dimensions;
 
 		public static TimePeriod[] ReportingPeriods = new TimePeriod[] {
-				  TimePeriod.Minutes,
-				  TimePeriod.Hours,
-				  TimePeriod.Days,
-				  TimePeriod.Months
+				  TimePeriod.Minute,
+				  TimePeriod.Hour,
+				  TimePeriod.Day,
+				  TimePeriod.Month
 		};
 
 
@@ -101,7 +101,7 @@ In: {4}", Name,
 			var json = evt.Token.ToString();
 			if (PassesFilter(json)) {
 				var updates = new List<JavascriptMetricUpdate>();
-				foreach (var filter in MetricFilter.Filters(evt.Data, _dimensions)) {
+				foreach (var filter in FilterBuilder.Filters(evt.Data, _dimensions)) {
 					Console.WriteLine("Filter: {0}", filter);
 					Dictionary<string, double> values = new Dictionary<string, double>();
 					foreach (var period in ReportingPeriods) {
