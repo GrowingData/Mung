@@ -89,10 +89,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\mung_log.mdf" />
-    <Content Include="App_Data\mung_log_log.ldf">
-      <DependentUpon>mung_log.mdf</DependentUpon>
-    </Content>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -167,6 +163,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="user\metric\" />
   </ItemGroup>
   <PropertyGroup>
