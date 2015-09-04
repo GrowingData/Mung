@@ -29,13 +29,13 @@ namespace GrowingData.Mung.Server {
 			return base.OnConnected(request, connectionId);
 		}
 
-		protected override Task OnDisconnected(IRequest request, string connectionId) {
+		protected override Task OnDisconnected(IRequest request, string connectionId, bool disconnecting) {
 			string instance = null;
 			if (_connectionToInstance.TryGetValue(connectionId, out instance)) {
 			}
 
 
-			return base.OnDisconnected(request, connectionId);
+			return base.OnDisconnected(request, connectionId, disconnecting);
 		}
 
 	}

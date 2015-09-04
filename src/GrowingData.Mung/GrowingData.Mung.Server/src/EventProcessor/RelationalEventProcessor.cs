@@ -13,7 +13,6 @@ using GrowingData.Mung.Relationizer;
 
 namespace GrowingData.Mung.Server {
 	public class RelationalEventProcessor : EventProcessor {
-		private object _sync = new object();
 
 		// Holds all our state for 
 		private RelationalSchema _relationizer;

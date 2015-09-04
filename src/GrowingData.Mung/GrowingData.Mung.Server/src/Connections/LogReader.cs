@@ -67,9 +67,9 @@ namespace GrowingData.Mung.Server {
 		}
 
 
-		protected override Task OnDisconnected(IRequest request, string connectionId) {
+		protected override Task OnDisconnected(IRequest request, string connectionId,  bool disconnecting) {
 			MungState.App.Pipeline.Disconnect(connectionId);
-			return base.OnDisconnected(request, connectionId);
+			return base.OnDisconnected(request, connectionId, disconnecting);
 
 
 		}
