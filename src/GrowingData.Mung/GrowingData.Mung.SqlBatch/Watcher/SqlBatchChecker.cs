@@ -19,15 +19,30 @@ namespace GrowingData.Mung.SqlBatch {
 		}
 
 		public static void CleanUpOldFiles(string dataPath, Func<SqlConnection> fnConnection) {
-			ResetLock(dataPath);
+			try {
+				File.AppendAllText(Path.Combine(dataPath, "cleanup-running.log"), "Start: " + DateTime.UtcNow.ToString());
+				ResetLock(dataPath);
 
-			foreach (var file in Directory.EnumerateFiles(dataPath, "loaded-*")) {
-				File.Delete(file);
+				foreach (var file in Directory.EnumerateFiles(dataPath, "loaded-*")) {
+					File.Delete(file);
+				}
+
+				Check("active-", dataPath, fnConnection);
+				Check("failed-", dataPath, fnConnection);
+				File.AppendAllText(Path.Combine(dataPath, "cleanup-running.log"), "Done: " + DateTime.UtcNow.ToString());
+
+			} catch (Exception ex) {
+				var exceptionLogPath = Path.Combine(dataPath, "cleanup.log");
+				var errorDetails = string.Format("{0}	{1}: {2}\r\n{3}",
+					DateTime.Now.ToString(),
+					ex.Message,
+					"Cleanup",
+					ex.StackTrace
+				);
+
+				File.AppendAllText(exceptionLogPath, errorDetails);
+
 			}
-
-			Check("active-", dataPath, fnConnection);
-			Check("failed-", dataPath, fnConnection);
-
 		}
 
 
@@ -46,10 +61,14 @@ namespace GrowingData.Mung.SqlBatch {
 		/// <param name="fnConnection"></param>
 		/// <param name="moveWithError"></param>
 		public static void Check(string prefix, string dataPath, Func<SqlConnection> fnConnection) {
+
+			File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "Start: " + DateTime.UtcNow.ToString());
+
 			var lockFilePath = Path.Combine(dataPath, "sql-batch.lock");
 
 			// Make sure we aren't already running...
 			if (File.Exists(lockFilePath)) {
+				File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "End (skipped due to lock): " + DateTime.UtcNow.ToString());
 				return;
 			}
 
@@ -92,6 +111,7 @@ namespace GrowingData.Mung.SqlBatch {
 					}
 				}
 
+				File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "Finished: " + DateTime.UtcNow.ToString());
 			} catch (Exception ex) {
 				var exceptionLogPath = Path.Combine(dataPath, "sql-batch-exceptions.log");
 				var errorDetails = string.Format("{0}	{1}: {2}\r\n{3}",
