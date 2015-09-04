@@ -28,7 +28,7 @@ namespace GrowingData.Mung.Server {
 
 
 		protected override void ProcessEvent(MungServerEvent evt) {
-			_relationizer.Write(evt.Token, evt.Type);
+			_relationizer.Write(evt.Data, evt.Type);
 
 
 		}
