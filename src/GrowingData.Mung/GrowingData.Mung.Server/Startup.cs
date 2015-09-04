@@ -28,9 +28,9 @@ namespace GrowingData.Mung.Server {
 
 
 			MungState.App.Pipeline.AddProcessor(new RelationalEventProcessor(PathManager.DataPath));
+			
 
-			var metricPath = Path.Combine(PathManager.BasePath, "user", "metric");
-			var metrics = new MetricFactory(metricPath, MungState.App.Pipeline);
+			var metrics = new MetricFactory(PathManager.MetricPath, MungState.App.Pipeline);
 
 			metrics.Reload();
 

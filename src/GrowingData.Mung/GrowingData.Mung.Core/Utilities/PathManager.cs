@@ -45,6 +45,25 @@ namespace GrowingData.Mung.Core {
 		}
 
 
+		private static string _metricPath = null;
+		public static string MetricPath {
+			get {
+				if (_metricPath != null) {
+					return _metricPath;
+				}
+
+				var checkPath = Path.Combine(BasePath, "user", "metric");
+
+				if (!Directory.Exists(checkPath)) {
+					Directory.CreateDirectory(checkPath);
+				}
+
+
+				return checkPath;
+			}
+		}
+
+
 
 	}
 }
