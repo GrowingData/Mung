@@ -21,7 +21,12 @@ namespace GrowingData.Mung.SqlBatch {
 		public static void CleanUpOldFiles(string dataPath, Func<SqlConnection> fnConnection) {
 			ResetLock(dataPath);
 
+			foreach (var file in Directory.EnumerateFiles(dataPath, "loaded-*")) {
+				File.Delete(file);
+			}
+
 			Check("active-", dataPath, fnConnection);
+			Check("failed-", dataPath, fnConnection);
 
 		}
 
