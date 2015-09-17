@@ -47,7 +47,7 @@ namespace GrowingData.Mung.Relationizer {
 			var minutes = Math.Floor(DateTime.UtcNow.Minute / 10d) * 10;
 
 			return string.Format("{0}.{1}",
-				DateTime.UtcNow.ToString("yyyy-MM-dd.hh"),
+				DateTime.UtcNow.ToString("yyyy-MM-dd.HH"),
 				minutes
 			);
 		}

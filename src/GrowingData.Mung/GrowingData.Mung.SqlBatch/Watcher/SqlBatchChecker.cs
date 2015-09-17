@@ -62,17 +62,17 @@ namespace GrowingData.Mung.SqlBatch {
 		/// <param name="moveWithError"></param>
 		public static void Check(string prefix, string dataPath, Func<SqlConnection> fnConnection) {
 
-			File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "Start: " + DateTime.UtcNow.ToString());
-
-			var lockFilePath = Path.Combine(dataPath, "sql-batch.lock");
-
-			// Make sure we aren't already running...
-			if (File.Exists(lockFilePath)) {
-				File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "End (skipped due to lock): " + DateTime.UtcNow.ToString());
-				return;
-			}
-
 			try {
+				File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "Start: " + DateTime.UtcNow.ToString());
+
+				var lockFilePath = Path.Combine(dataPath, "sql-batch.lock");
+
+				// Make sure we aren't already running...
+				if (File.Exists(lockFilePath)) {
+					File.AppendAllText(Path.Combine(dataPath, "sql-batch-check.log"), "End (skipped due to lock): " + DateTime.UtcNow.ToString());
+					return;
+				}
+
 				File.WriteAllText(lockFilePath, DateTime.Now.ToString());
 
 				foreach (var file in Directory.EnumerateFiles(dataPath, prefix + "*")) {
