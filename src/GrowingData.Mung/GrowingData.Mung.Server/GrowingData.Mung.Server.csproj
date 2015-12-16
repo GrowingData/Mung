@@ -129,8 +129,8 @@
     <Compile Include="src\EventProcessor\ConnectedEventProcessor.cs" />
     <Compile Include="src\EventProcessor\EventStream.cs" />
     <Compile Include="src\EventProcessor\RelationalEventProcessor.cs" />
-    <Compile Include="src\EventWatchers\MetricConnection.cs" />
     <Compile Include="src\EventWatchers\JavascriptMetricConnection.cs" />
+    <Compile Include="src\EventWatchers\MetricConnection.cs" />
     <Compile Include="src\Model\IMungServer.cs" />
     <Compile Include="src\Model\MungState.cs" />
     <Compile Include="src\Model\MungApp.cs" />

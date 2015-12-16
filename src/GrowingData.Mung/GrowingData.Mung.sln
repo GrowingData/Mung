@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.MetricJs",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.Metric", "GrowingData.Metric\GrowingData.Mung.Metric.csproj", "{69692D0D-3CBB-451F-A269-4730648F5E07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Mung.Web", "GrowingData.Mung.Web\GrowingData.Mung.Web.csproj", "{4B588226-7C8A-48A1-93CE-21A2C5A5742E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowingData.Utilities", "GrowingData.Utilities\GrowingData.Utilities.csproj", "{61B212A8-3A2B-4204-9E9D-F12771430D7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{69692D0D-3CBB-451F-A269-4730648F5E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69692D0D-3CBB-451F-A269-4730648F5E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69692D0D-3CBB-451F-A269-4730648F5E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B588226-7C8A-48A1-93CE-21A2C5A5742E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B588226-7C8A-48A1-93CE-21A2C5A5742E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B588226-7C8A-48A1-93CE-21A2C5A5742E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B588226-7C8A-48A1-93CE-21A2C5A5742E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B212A8-3A2B-4204-9E9D-F12771430D7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B212A8-3A2B-4204-9E9D-F12771430D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B212A8-3A2B-4204-9E9D-F12771430D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B212A8-3A2B-4204-9E9D-F12771430D7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
