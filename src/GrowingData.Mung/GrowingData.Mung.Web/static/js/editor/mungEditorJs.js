@@ -2,13 +2,13 @@
 (function ($) {
 	// «
 	$.fn.mungEditorJs = function (dashboard, component) {
-		var _ = this;
+		var self = this;
 
-		_.component = component;
-		_.dashboard = dashboard;
+		self.component = component;
+		self.dashboard = dashboard;
 
-		_.editor = _.mungEditor(dashboard, component, "text/javascript");
-		_.codeMirrorDiv = _.editor.codeMirrorDiv;
+		self.editor = self.mungEditor(dashboard, component, "text/javascript");
+		self.codeMirrorDiv = self.editor.codeMirrorDiv;
 
 
 		return this;

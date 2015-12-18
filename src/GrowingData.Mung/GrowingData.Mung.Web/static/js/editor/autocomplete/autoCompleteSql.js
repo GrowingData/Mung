@@ -1,5 +1,5 @@
 ﻿function AutoCompleteSql(editor, schema) {
-	var _ = this;
+	var self = this;
 
 
 	this.editor = editor;
@@ -24,9 +24,9 @@
 		}
 
 		var matches = [];
-		for (var i = 0; i < _.schema.length; i++) {
-			if (_.schema[i].TableName.toLowerCase().indexOf(lower) >= 0) {
-				matches.push(_.schema[i]);
+		for (var i = 0; i < self.schema.length; i++) {
+			if (self.schema[i].TableName.toLowerCase().indexOf(lower) >= 0) {
+				matches.push(self.schema[i]);
 			}
 		}
 		return matches;
@@ -36,17 +36,17 @@
 	// Gets the current token, allowing for multi name tokens that might look
 	// like "schema.table"
 	this.getMultiNameToken = function (cur) {
-		var token = _.codeMirror.getTokenAt(cur);
-		var prev = _.previousToken(token, cur);
+		var token = self.codeMirror.getTokenAt(cur);
+		var prev = self.previousToken(token, cur);
 		if (token != null && token.string == ".") {
 			prev = token;
 		}
 		//console.log("start|> token:" + token.string + ", prev: " + prev.string);
 
-		// Check to make sure its not like "schema_name.table_name"
+		// Check to make sure its not like "schemaselfname.tableselfname"
 		if (token != null && token.string.length > 0 && token.string[0] == ".") {
 			if (token.string == ".") {
-				prev = _.previousToken(token, cur);
+				prev = self.previousToken(token, cur);
 			}
 			if (prev != null) {
 				token.string = prev.string + token.string;
@@ -59,8 +59,8 @@
 
 	this.cursorActivity = function () {
 
-		var cur = _.codeMirror.getCursor();
-		var token = _.getMultiNameToken(cur);
+		var cur = self.codeMirror.getCursor();
+		var token = self.getMultiNameToken(cur);
 
 		if (token.string == " ") {
 			return;
@@ -69,24 +69,24 @@
 
 
 		// Do we need to popup a list of tables?
-		var space = _.previousToken(token, cur);
+		var space = self.previousToken(token, cur);
 		if (space != null) {
 			if (space.string == " ") {
-				var trigger = _.previousToken(space, cur);
+				var trigger = self.previousToken(space, cur);
 				if (trigger != null) {
-					if (_.tokenIsTableTrigger(trigger)) {
-						_.showAutocomplete(token);
-						var matches = _.searchTables(token.string);
-						_.autoCompleteOptions = [];
+					if (self.tokenIsTableTrigger(trigger)) {
+						self.showAutocomplete(token);
+						var matches = self.searchTables(token.string);
+						self.autoCompleteOptions = [];
 
 						for (var i = 0; i < matches.length; i++) {
 							// Create the option
-							var opt = _.createAutoCompleteTable(matches[i]);
-							opt.appendTo(_.matches)
+							var opt = self.createAutoCompleteTable(matches[i]);
+							opt.appendTo(self.matches)
 							// Keep a reference to it so we dont need to keep hitting up the dom
-							_.autoCompleteOptions.push(opt);
+							self.autoCompleteOptions.push(opt);
 						}
-						_.selectedIndex = -1;
+						self.selectedIndex = -1;
 						return;
 					}
 				}
@@ -95,8 +95,8 @@
 		// 
 
 
-		if (_.isAutoCompleting) {
-			_.hideAutocomplete();
+		if (self.isAutoCompleting) {
+			self.hideAutocomplete();
 		}
 	};
 
@@ -113,38 +113,38 @@
 	}
 
 	this.autoCompletePick = function () {
-		var cur = _.codeMirror.getCursor();
-		var token = _.getMultiNameToken(cur);
+		var cur = self.codeMirror.getCursor();
+		var token = self.getMultiNameToken(cur);
 
-		var match = _.autoCompleteOptions[_.selectedIndex].data("match");
+		var match = self.autoCompleteOptions[self.selectedIndex].data("match");
 
 		//var table = "\"" + [match.connection, match.TableName].join(".") + "\"";
 		var table = match.TableName;
-		var alias = _.buildAlias(match.TableName) + "\r\n";
-		_.tableAliases[alias] = match;
+		var alias = self.buildAlias(match.TableName) + "\r\n";
+		self.tableAliases[alias] = match;
 
-		_.codeMirror.replaceRange(table + " " + alias,
+		self.codeMirror.replaceRange(table + " " + alias,
 			{ line: cur.line, ch: token.start },
 			{ line: cur.line, ch: token.end });
 
 
-		var lineText = _.codeMirror.getLine(_.codeMirror.firstLine());
+		var lineText = self.codeMirror.getLine(self.codeMirror.firstLine());
 
 		//if (lineText.indexOf("using") == 0) {
-		//	_.codeMirror.replaceRange("using \"" + match.connection + "\"", { line: 0, ch: 0 }, { line: 0, ch: lineText.length });
+		//	self.codeMirror.replaceRange("using \"" + match.connection + "\"", { line: 0, ch: 0 }, { line: 0, ch: lineText.length });
 		//} else {
-		//	_.codeMirror.replaceRange("using \"" + match.connection + "\"\n\n", { line: 0, ch: 0 }, { line: 0, ch: 0 })
+		//	self.codeMirror.replaceRange("using \"" + match.connection + "\"\n\n", { line: 0, ch: 0 }, { line: 0, ch: 0 })
 		//}
 
 
-		_.hideAutocomplete();
+		self.hideAutocomplete();
 
 	};
 
 	this.buildAlias = function (tableName) {
 		// Try the first letter...
 		var firstLetter = tableName[0].toUpperCase();
-		if (!(firstLetter in _.tableAliases)) {
+		if (!(firstLetter in self.tableAliases)) {
 			return firstLetter;
 		}
 		var uscore = null;
@@ -165,14 +165,14 @@
 				underscores.push(tableName[i].toUpperCase());
 				underScore = false;
 			}
-			if (tableName[i] == '_') {
+			if (tableName[i] == 'self') {
 				underScore = true;
 			}
 		}
-		// "gooroo_skill" => "GS"
+		// "goorooselfskill" => "GS"
 		if (underscores.length > 0) {
 			uscore = tableName[0].toUpperCase() + underscores.join("")
-			if (!(uscore in _.tableAliases)) {
+			if (!(uscore in self.tableAliases)) {
 				return uscore;
 			}
 		}
@@ -180,7 +180,7 @@
 		// "GoorooSkill" => "GS"
 		if (uppers.length > 0 && hasLower) {
 			camel = uppers.join("").toUpperCase();
-			if (!(camel in _.tableAliases)) {
+			if (!(camel in self.tableAliases)) {
 				return camel;
 			}
 		}
@@ -188,13 +188,13 @@
 		// Just keep on adding numbers until we end up with something
 		// assuming we have less than 1000 tables.
 		for (var i = 2; i < 1000; i++) {
-			if (!((firstLetter + i) in _.tableAliases)) {
+			if (!((firstLetter + i) in self.tableAliases)) {
 				return firstLetter + i;
 			}
-			if (camel != null && !((camel + i) in _.tableAliases)) {
+			if (camel != null && !((camel + i) in self.tableAliases)) {
 				return camel + i;
 			}
-			if (uscore != null && !((uscore + i) in _.tableAliases)) {
+			if (uscore != null && !((uscore + i) in self.tableAliases)) {
 				return uscore + i;
 			}
 		}
@@ -233,14 +233,14 @@
 
 
 	this.showAutocomplete = function (token) {
-		var cur = { ch: token.start, line: _.codeMirror.getCursor().line };
-		var pos = _.codeMirror.charCoords(cur);
+		var cur = { ch: token.start, line: self.codeMirror.getCursor().line };
+		var pos = self.codeMirror.charCoords(cur);
 		this.autocomplete.css("top", pos.top + "px").css("left", pos.left + "px");
 		this.matches.empty();
 		this.autocomplete.fadeIn(100);
 		this.isAutoCompleting = true;
 
-		this.codeMirror.addKeyMap(_.keyMap);
+		this.codeMirror.addKeyMap(self.keyMap);
 
 	}
 
@@ -256,7 +256,7 @@
 		if (token == null || token.start == 0) {
 			return null;
 		}
-		return _.codeMirror.getTokenAt({ ch: token.start, line: cur.line })
+		return self.codeMirror.getTokenAt({ ch: token.start, line: cur.line })
 	}
 
 
@@ -279,16 +279,16 @@
 	this.keyMap = {
 		name: "mung-autocomplete",
 		Up: function (cm) {
-			_.autoCompleteSelect(-1);
+			self.autoCompleteSelect(-1);
 		},
 		Down: function (cm) {
-			_.autoCompleteSelect(1)
+			self.autoCompleteSelect(1)
 		},
 		//Enter: function (cm) {
-		//	_.autoCompletePick();
+		//	self.autoCompletePick();
 		//},
 		Tab: function (cm) {
-			_.autoCompletePick();
+			self.autoCompletePick();
 		}
 	}
 

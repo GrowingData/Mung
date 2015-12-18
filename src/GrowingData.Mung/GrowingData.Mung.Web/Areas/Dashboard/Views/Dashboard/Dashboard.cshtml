@@ -4,18 +4,26 @@
 
 	var dashboard = ViewBag.Dashboard as Dashboard;
 	var components = ViewBag.Components as List<Component>;
+
+	var componentsJson = Newtonsoft.Json.JsonConvert.SerializeObject(components);
+	var dashboardJson = Newtonsoft.Json.JsonConvert.SerializeObject(dashboard);
 }
 
-<div class="dashboard">
+<div class="dashboard ">
 	<h2>@dashboard.Title</h2>
 
-	<button type="button" class="btn btn-info btn-lg" id="add-component">Add component</button>
+	<button type="button" class="btn btn-info btn-lg" id="add-view">Add view</button>
+
+	<div class="view-holder grid-stack">
+	</div>
 	@foreach (var c in components) {
 
 		<div class="component" id="component-@c.ComponentId"></div>
 		<script type="text/javascript">
 			MungOnLoader(function () {
-				$("#component-@c.ComponentId").mungComponent(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(c)));
+
+
+				$(".dashboard").mungDashboard( @Html.Raw(componentsJson));
 			});
 		</script>
 
@@ -24,7 +32,7 @@
 
 
 	<!-- Modal -->
-	<div id="edit-component" class="modal fade">
+	<div id="edit-view" class="modal fade">
 		<div class="modal-dialog modal-lg">
 
 			<!-- Modal content-->
@@ -43,7 +51,7 @@
 
 					</div>
 
-					
+
 					<label>SQL</label>
 					<div class="editor-sql">
 						<textarea class="text-sql"></textarea>
@@ -62,7 +70,7 @@
 					</div>
 
 				</div>
-					<button type="button" class="btn btn-primary right btn-preview">Preview</button>
+				<button type="button" class="btn btn-primary right btn-preview">Preview</button>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default left btn-close">Close</button>
 					<button type="button" class="btn btn-primary right btn-save">Save</button>
@@ -73,13 +81,33 @@
 	</div>
 </div>
 
+<div class="view grid-stack-item template">
+	<div class="view-inner grid-stack-item-content">
+		<div class="view-header">
+		</div>
+
+		<div class="view-content ">
+
+		</div>
+		<div class="view-error">
+
+		</div>
+
+
+		<div class="view-footer">
+			<div class="status"></div>
+		</div>
+	</div>
+</div>
+
+
 <div class="defaults">
 	<pre class="default-sql">
 SELECT COUNT(*) as request_count
 FROM dyn.request
 WHERE _at_ > DATEADD(DAY, -1, GETUTCDATE())
 	</pre>
-	
+
 	<pre class="default-html">
 <div class="component-inner">
 	<small>Requests today</small>
@@ -97,6 +125,9 @@ function(data, $component){
 
 <script type="text/javascript">
 	MungOnLoader(function () {
-		var dashboard = $(".dashboard").mungDashboard(@Html.Raw( Newtonsoft.Json.JsonConvert.SerializeObject(dashboard) ));
+		var dashboard = $(".dashboard").mungDashboard(
+			@Html.Raw( dashboardJson ),
+			@Html.Raw(componentsJson)
+		);
 	});
 </script>

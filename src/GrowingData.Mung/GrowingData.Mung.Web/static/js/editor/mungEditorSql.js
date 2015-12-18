@@ -2,21 +2,21 @@
 (function ($) {
 	// «
 	$.fn.mungEditorSql = function (dashboard, component) {
-		var _ = this;
+		var self = this;
 
-		_.component = component;
-		_.dashboard = dashboard;
+		self.component = component;
+		self.dashboard = dashboard;
 
-		_.editor = _.mungEditor(dashboard, component, "text/x-sql");
-		_.codeMirrorDiv = _.editor.codeMirrorDiv;
+		self.editor = self.mungEditor(dashboard, component, "text/x-sql");
+		self.codeMirrorDiv = self.editor.codeMirrorDiv;
 
 		function getSchemata() {
 			$.ajax({
 				url: "/api/schema/mung",
 				method: "GET",
 				success: function (r) {
-					_.autoComplete = new AutoCompleteSql(_, r.Schema);
-					_.editor.codeMirror.on("cursorActivity", _.autoComplete.cursorActivity);
+					self.autoComplete = new AutoCompleteSql(self, r.Schema);
+					self.editor.codeMirror.on("cursorActivity", self.autoComplete.cursorActivity);
 				}
 			});
 

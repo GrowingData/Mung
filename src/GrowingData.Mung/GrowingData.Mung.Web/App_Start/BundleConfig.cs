@@ -13,6 +13,8 @@ namespace GrowingData.Mung.Web {
 				"~/Scripts/bootstrap.js",
 				"~/Scripts/respond.js",
 
+				"~/lib/jquery-ui-1.11.4.custom/jquery-ui.js",
+				"~/lib/underscore-1.8.3/underscore.js",
 				"~/lib/gridstack.js-0.2.3/src/gridstack.js",
 
 				"~/lib/codemirror-4.4/lib/codemirror.js",
@@ -23,6 +25,7 @@ namespace GrowingData.Mung.Web {
 				"~/lib/codemirror-4.4/addon/hint/html-hint.js",
 				"~/lib/codemirror-4.4/addon/hint/javascript-hint.js",
 
+				"~/static/js/models/mungViewModel.js",
 
 				"~/static/js/editor/mungEditor.js",
 				"~/static/js/editor/mungEditorHtml.js",
@@ -31,9 +34,8 @@ namespace GrowingData.Mung.Web {
 				"~/static/js/editor/autocomplete/autoCompleteSql.js",
 
 				"~/static/js/dashboard/mungDashboard.js",
-				"~/static/js/dashboard/mungComponentEditor.js",
-				"~/static/js/dashboard/mungComponent.js",
-				"~/static/js/dashboard/mungDashboard.js"
+				"~/static/js/dashboard/mungViewEditor.js",
+				"~/static/js/dashboard/mungView.js"
 			));
 
 
@@ -42,13 +44,14 @@ namespace GrowingData.Mung.Web {
 				"~/Content/bootstrap.css",
 
 				"~/lib/gridstack.js-0.2.3/src/gridstack.css",
+				"~/lib/font-awesome-4.5.0/css/font-awesome.css",
 
 				"~/lib/codemirror-4.4/lib/codemirror.css",
 				"~/lib/codemirror-4.4/addon/hint/show-hint.css",
 				"~/static/css/theme/light-table.css",
 				"~/static/css/site.css",
 				"~/static/css/dashboard.css",
-				"~/static/css/component.css",
+				"~/static/css/view.css",
 				"~/static/css/editor.css"
 			));
 		}
