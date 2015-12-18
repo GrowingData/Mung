@@ -1,0 +1,45 @@
+﻿@{
+	ViewBag.Title = "Join";
+}
+
+<h2>Join MUNG.io</h2>
+
+<form action="/join" method="post">
+	@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage)) {
+
+	}
+
+	<fieldset class="form-group row">
+		<label for="exampleInputEmail1" class="col-sm-2">Name</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+			<small class="text-muted">Please enter your name</small>
+		</div>
+	</fieldset>
+
+	<fieldset class="form-group row">
+		<label for="exampleInputEmail1" class="col-sm-2">Email address</label>
+		<div class="col-sm-10">
+			<input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+			<small class="text-muted">We'll never share your email with anyone else.</small>
+		</div>
+	</fieldset>
+
+	<fieldset class="form-group row">
+		<label for="exampleInputPassword1" class="col-sm-2">Password</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+		</div>
+	</fieldset>
+	<div class="form-group row">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-secondary">Join</button>
+		</div>
+	</div>
+
+</form>
+
+
+
+
+

@@ -1,0 +1,102 @@
+﻿@{
+	ViewBag.Title = "Dashboard";
+
+
+	var dashboard = ViewBag.Dashboard as Dashboard;
+	var components = ViewBag.Components as List<Component>;
+}
+
+<div class="dashboard">
+	<h2>@dashboard.Title</h2>
+
+	<button type="button" class="btn btn-info btn-lg" id="add-component">Add component</button>
+	@foreach (var c in components) {
+
+		<div class="component" id="component-@c.ComponentId"></div>
+		<script type="text/javascript">
+			MungOnLoader(function () {
+				$("#component-@c.ComponentId").mungComponent(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(c)));
+			});
+		</script>
+
+
+	}
+
+
+	<!-- Modal -->
+	<div id="edit-component" class="modal fade">
+		<div class="modal-dialog modal-lg">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						<span class="edit">Edit component</span>
+						<span class="add">Add component</span>
+
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="preview component">
+
+
+					</div>
+
+					
+					<label>SQL</label>
+					<div class="editor-sql">
+						<textarea class="text-sql"></textarea>
+					</div>
+
+					<label>HTML</label>
+					<div class="editor-html">
+						<textarea class="component-html"></textarea>
+					</div>
+
+
+
+					<label>Javascript</label>
+					<div class="editor-js">
+						<textarea class="component-js"></textarea>
+					</div>
+
+				</div>
+					<button type="button" class="btn btn-primary right btn-preview">Preview</button>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default left btn-close">Close</button>
+					<button type="button" class="btn btn-primary right btn-save">Save</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="defaults">
+	<pre class="default-sql">
+SELECT COUNT(*) as request_count
+FROM dyn.request
+WHERE _at_ > DATEADD(DAY, -1, GETUTCDATE())
+	</pre>
+	
+	<pre class="default-html">
+<div class="component-inner">
+	<small>Requests today</small>
+	<h2 class="requests-today"></h2>
+</div>
+	</pre>
+
+	<pre class="default-js">
+function(data, $component){
+	$component.find(".requests-today").text(data.Rows[0].request_count);
+}
+	</pre>
+</div>
+
+
+<script type="text/javascript">
+	MungOnLoader(function () {
+		var dashboard = $(".dashboard").mungDashboard(@Html.Raw( Newtonsoft.Json.JsonConvert.SerializeObject(dashboard) ));
+	});
+</script>

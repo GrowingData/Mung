@@ -1,0 +1,15 @@
+﻿
+.component {
+	border-radius: 5px;
+	border: solid 1px #aaa;
+	padding: 4px;
+	background: #fafafa;
+	margin:10px;
+}
+
+.component h2{
+	text-align:center;
+	margin:0;
+	padding:4px;
+
+}

@@ -1,0 +1,25 @@
+﻿@{
+	var user = SessionManager.CurrentMunger;
+
+}
+@if (user != null) {
+	<ul class="nav navbar-nav navbar-right">
+		<li>
+			<a class="pull-right" href="javascript:void(0)">@user.Name</a>
+		</li>
+		<li>
+			<form method="post" action="/logout">
+				<button type="submit" class="btn btn-secondary">Sign out</button>
+			</form>
+		</li>
+	</ul>
+} else {
+	<ul class="nav navbar-nav navbar-right">
+		<li>
+			<a class="pull-right" href="/join">Join</a>
+		</li>
+		<li>
+			<a class="pull-right" href="/login">Login</a>
+		</li>
+	</ul>
+}

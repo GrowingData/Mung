@@ -1,0 +1,51 @@
+﻿@media screen and (min-width: 768px) {
+	.modal-dialog.modal-lg {
+		width: 80%;
+	}
+}
+
+.autocomplete.schemata {
+	border: solid 1px #312E2E;
+	background: #1B1B1B;
+	margin-top: 16px;
+	margin-left: -4px;
+	opacity: 0.9;
+	height: 200px;
+	width: 320px;
+	position: absolute;
+	display: none;
+	overflow: hidden;
+	z-index: 1050; /* Higher than the modal */
+}
+
+	.autocomplete.schemata > ul {
+		padding-left: 0;
+		overflow-y: auto;
+		overflow-x: auto;
+	}
+
+
+.autocomplete li.table {
+	color: #fff;
+	border-bottom: solid 1px #312E2E;
+	padding: 4px;
+	clear: both;
+	margin: 0;
+}
+
+
+.autocomplete li.selected {
+	background: #0094ff;
+}
+
+.autocomplete ul.which-one > li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+}
+
+
+.defaults {
+	display: none;
+}

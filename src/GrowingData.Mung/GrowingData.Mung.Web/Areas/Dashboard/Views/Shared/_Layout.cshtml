@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		var startTime = new Date();
+		window.fns = [];
+		function MungOnLoader(fn) {
+			window.fns.push(fn);
+		}
+	</script>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title - Mung.io</title>
+	@Styles.Render("~/bundles/css")
+
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+				</button>
+				MUNG
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li></li>
+				</ul>
+				@Html.Partial("_LoginPartial")
+			</div>
+		</div>
+	</div>
+	<div class="container body-content">
+		@RenderBody()
+		<hr />
+		<footer>
+			<p>&copy; @DateTime.Now.Year - MUNG.IO</p>
+		</footer>
+	</div>
+
+
+	@Scripts.Render("~/bundles/js")
+
+	
+	<script>
+		$(document).ready(function () {
+			var d = new Date();
+			var elapsed = d.getTime() - startTime.getTime();
+			console.log("Ready start: " + elapsed + "ms")
+
+			for (var i = 0; i < window.fns.length; i++) {
+				window.fns[i]();
+			}
+
+			d = new Date();
+			var elapsed = d.getTime() - startTime.getTime();
+			console.log("Ready end: " + elapsed + "ms")
+		});
+
+	</script>
+
+</body>
+</html>
