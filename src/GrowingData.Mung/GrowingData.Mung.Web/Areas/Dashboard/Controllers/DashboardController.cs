@@ -35,7 +35,7 @@ namespace GrowingData.Mung.Web.Areas.Dashboards.Controllers {
 				}
 
 				ViewBag.Dashboard = dashboard;
-				ViewBag.Components = dashboard.GetComponents();
+				ViewBag.Graphs = dashboard.GetGraphs();
 
 
 			}

@@ -1,0 +1,127 @@
+﻿body {
+	background: #4e555f;
+	color: #9da1aa;
+}
+
+.navbar-inverse {
+	background-color: #383d43;
+	border-color: #383d43;
+}
+
+.modal-content {
+	background: #4e555f;
+}
+
+.cm-s-light-table.CodeMirror {
+	background: #202e39;
+}
+
+input, select, textarea {
+	background: #202e39;
+}
+
+.modal-footer, .modal-header {
+	border-color: #616873;
+}
+
+.graph-inner {
+	background: #5f6670;
+}
+
+	.graph-inner .graph-footer {
+		background: #737780;
+	}
+
+	.graph-inner .graph-header {
+		border-bottom: solid 1px #737982;
+		background: Transparent;
+	}
+
+.graph-title {
+	color: #ECF1F7;
+}
+
+.btn-info {
+	background: #5f6670;
+	border-color: #5f6670;
+}
+
+.blue {
+	color: #659eeb;
+}
+
+.blue-bg, .blue-bg:hover, .blue-bg:active {
+	background: #659eeb;
+	border-color: #659eeb;
+	color: #fff;
+}
+
+a {
+	color: #9da1aa;
+	cursor: pointer;
+}
+
+	a:hover {
+		color: #4f94f2;
+	}
+
+	a:active {
+		color: #3787f4;
+	}
+
+
+.red {
+	color: #eb6c65;
+}
+
+.red-bg, .red-bg:hover, .red-bg:active {
+	background: #eb6c65;
+	border-color: #eb6c65;
+	color: #fff;
+}
+
+.green {
+	color: #87b56c;
+}
+
+.green-bg, .green-bg:hover, .green-bg:active {
+	background: #87b56c;
+	border-color: #87b56c;
+	color: #fff;
+}
+
+
+.dashboard-title {
+	color: #ECF1F7;
+}
+
+hr {
+	border-top: 1px solid #737982;
+}
+
+.btn-default, .btn-default:hover, .btn-default:active {
+	color: #fff;
+	background-color: #616873;
+	border-color: #616873;
+}
+
+
+table.mung-table {
+	border: solid 1px #737982 ;
+}
+
+	table.mung-table td {
+		border-top: 1px solid #737982;
+	}
+
+	table.mung-table th {
+		background: #555D67;
+		border-bottom: 1px solid #737982;
+		text-align: left;
+		font-weight: bold;
+		color: #fff;
+	}
+
+	table.mung-table tr:nth-child(odd) {
+		background: #616973;
+	}

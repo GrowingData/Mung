@@ -38,10 +38,10 @@ namespace GrowingData.Mung.Web.Models {
 		}
 
 
-		public List<Component> GetComponents() {
+		public List<Graph> GetGraphs() {
 			using (var cn = Db.Metadata()) {
-				var components = cn.ExecuteAnonymousSql<Component>(
-					@"SELECT * FROM mung.Component WHERE DashboardId = @DashboardId",
+				var components = cn.ExecuteAnonymousSql<Graph>(
+					@"SELECT * FROM mung.Graph WHERE DashboardId = @DashboardId",
 					new { DashboardId = DashboardId }
 				);
 				return components;

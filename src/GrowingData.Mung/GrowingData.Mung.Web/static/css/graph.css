@@ -1,0 +1,54 @@
+﻿
+.graph-content {
+		padding-bottom: 24px;
+}
+
+.graph-inner {
+	padding: 0;
+	position: relative;
+}
+
+	.graph-inner .graph-header {
+		padding: 8px;
+	}
+
+		.graph-inner .graph-header h2 {
+			font-size: 10pt;
+			text-align: left;
+			margin: 0;
+			padding: 0;
+		}
+
+	.graph-inner .graph-footer {
+		background: #eee;
+	}
+
+	.graph-inner .graph-error {
+		background: #d00;
+		color: #eee;
+	}
+
+
+	.graph-inner h2 {
+		text-align: center;
+		margin: 0;
+		padding: 4px;
+	}
+
+
+	.graph-inner .graph-footer {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 0px;
+		padding-left: 8px;
+		padding-right: 8px;
+		height: 24px;
+		line-height: 24px;
+	}
+
+
+	.grid-stack > .grid-stack-item > .grid-stack-item-content {
+		overflow-y:hidden;
+	}

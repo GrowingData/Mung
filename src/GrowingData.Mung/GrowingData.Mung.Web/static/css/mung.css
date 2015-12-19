@@ -1,0 +1,81 @@
+﻿/* Style sheet for standard layout and defaults fo rmung.  Try to avoid doing anything
+	theme related in this.
+*/
+
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+	font-family: Consolas, monospace;
+	font-size: 12px;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+
+input {
+	display: block;
+	padding: 6px;
+	color: #ddd;
+	margin-bottom: 8px;
+	outline: none;
+	background: rgba(255,255,255, 0.1);
+	border: solid 1px rgba(0,0,0, 0.2);
+	width: 100%;
+}
+
+.schemata input:active {
+	background: rgba(255,255,255, 0.2);
+	border: solid 1px rgba(255,255,255, 0.2);
+	outline: none;
+}
+
+.schemata input:focus {
+	background: rgba(255,255,255, 0.1);
+	border: solid 1px rgba(255,255,255, 0.2);
+	outline: none;
+}
+
+
+.icon-circle-arrow-right {
+	display: none;
+}
+
+.navbar-nav {
+	margin-left: 64px;
+}
+
+.navbar h1 {
+	color: #fff;
+	line-height: 50px;
+	font-size: 24px;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar .navbar-nav li button {
+	margin: 10px;
+	display: block;
+}
+
+.dashboard-title {
+	padding-left: 10px;
+}
+
+
+.edit-graph {
+	display: block;
+	float: right;
+}
+
+.preview.graph {
+	padding: 32px;
+}
+
+table.mung-table th {
+	font-weight: bold;
+}
+
+.mung-table-binder {
+}

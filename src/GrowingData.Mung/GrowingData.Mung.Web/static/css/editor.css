@@ -49,3 +49,28 @@
 .defaults {
 	display: none;
 }
+
+
+#current-line {
+	border: none;
+	display: block;
+	position: absolute;
+	background: none;
+	left: 0px;
+	width: 100%;
+	bottom: 0px;
+	height: 20px;
+	color: #eee;
+	padding: 2px;
+	font-family: "Consolas",monospace;
+	font-size: 10pt;
+}
+
+	#current-line:focus {
+		outline: none;
+	}
+
+	#edit-graph .modal-dialog label{
+		margin-top:16px;
+		margin-bottom:0;
+	}

@@ -11,7 +11,7 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - Mung.io</title>
+	<title>@ViewBag.Title | Mung.io</title>
 	@Styles.Render("~/bundles/css")
 
 </head>
@@ -22,11 +22,15 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="icon-bar"></span>
 				</button>
-				MUNG
+				<h1>mung.io</h1>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li></li>
+					<li>
+
+						<button type="button" class="btn btn-info btn-sm green-bg" id="add-graph">+ Add graph</button>
+
+					</li>
 				</ul>
 				@Html.Partial("_LoginPartial")
 			</div>
@@ -36,14 +40,14 @@
 		@RenderBody()
 		<hr />
 		<footer>
-			<p>&copy; @DateTime.Now.Year - MUNG.IO</p>
+			<p>&copy; @DateTime.Now.Year - GrowingData.com.au</p>
 		</footer>
 	</div>
 
 
 	@Scripts.Render("~/bundles/js")
 
-	
+
 	<script>
 		$(document).ready(function () {
 			var d = new Date();

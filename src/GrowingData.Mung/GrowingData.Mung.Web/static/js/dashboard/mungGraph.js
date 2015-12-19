@@ -1,14 +1,20 @@
 ﻿
 (function ($) {
-	$.fn.mungView = function (viewModel) {
+	$.fn.mungGraph = function (graphModel, dashboard) {
+		if (graphModel == null) throw "mungGraph: graphModel is null";
+
 		var self = this;
 
-		self.viewModel = viewModel;
-		self.data("model", viewModel);
+		self.dashboard = dashboard;
+		self.graphModel = graphModel;
+		self.data("model", graphModel);
 
-		self.content = self.find(".view-content");
-		self.error = self.find(".view-error");
-		self.content = self.find(".view-content");
+		self.content = self.find(".graph-content");
+		self.error = self.find(".graph-error");
+		self.content = self.find(".graph-content");
+		self.title = self.find(".graph-title");
+
+		self.edit = self.find(".edit-graph");
 
 		self.status = self.find(".status");
 
@@ -25,15 +31,15 @@
 
 		this.refresh = function () {
 			setStatus("Refreshing...");
-			self.content.html(self.viewModel.data.Html);
+			self.content.html(self.graphModel.data.Html);
+			self.title.text(self.graphModel.data.Title);
 
-
-			fn = Function("data", "$component", parseFunctionBody(self.viewModel.data.Js));
+			fn = Function("data", "$component", parseFunctionBody(self.graphModel.data.Js));
 
 			// Firstly try to get the binding function
 			var fn = null;
 			try {
-				fn = Function("data", "$component", parseFunctionBody(self.viewModel.data.Js));
+				fn = Function("data", "$component", parseFunctionBody(self.graphModel.data.Js));
 			} catch (x) {
 				self.error.html(JSON.stringify(x)).css("color", "red");
 				setStatus("Javascript function parse error");
@@ -43,7 +49,7 @@
 
 			$.ajax({
 				url: "/api/sql/mung",
-				data: { sql: self.viewModel.data.Sql },
+				data: { sql: self.graphModel.data.Sql },
 				method: "POST",
 				success: function (r) {
 					setStatus("Binding...");
@@ -72,6 +78,10 @@
 
 		function init() {
 			self.refresh();
+			self.edit.click(function () {
+				self.dashboard.editGraph(self);
+
+			});
 		}
 
 		init();

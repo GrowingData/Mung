@@ -18,6 +18,13 @@ namespace GrowingData.Mung.Web.Areas.Dashboards.Controllers {
 		public ActionResult Create(string newUrl, string title) {
 
 			newUrl = "/" + newUrl;
+			if (string.IsNullOrEmpty(title)) {
+				title = newUrl
+					.Replace("-", " ")
+					.Replace("_", " ")
+					.Replace("/", "");
+			}
+
 			using (var cn = Db.Metadata()) {
 
 				// Does the URL already exist?

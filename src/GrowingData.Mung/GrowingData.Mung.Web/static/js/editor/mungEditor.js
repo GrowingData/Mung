@@ -1,18 +1,22 @@
 ﻿
 (function ($) {
 	// «
-	$.fn.mungEditor = function (dashboard, component, mode) {
+	$.fn.mungEditor = function (dashboard, graph, mode) {
+		if (dashboard == null) throw "mungEditor: dashboard is null";
+		if (graph == null) throw "mungEditor: graph is null";
+		if (mode == null) throw "mungEditor: mode is null";
+
 		var self = this;
 
 
 		self.dashboard = dashboard;
-		self.component = component;
+		self.graph = graph;
 		self.textarea = self.find("textarea");
 
 		this.keyMap = {
-			name: "mung-execute-component",
+			name: "mung-execute-graph",
 			"Ctrl-Enter": function (cm) {
-				self.component.execute();
+				self.graph.execute();
 			}
 		}
 

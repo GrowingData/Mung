@@ -25,8 +25,16 @@ namespace GrowingData.Mung.Web {
 				"~/lib/codemirror-4.4/addon/hint/html-hint.js",
 				"~/lib/codemirror-4.4/addon/hint/javascript-hint.js",
 
-				"~/static/js/models/mungViewModel.js",
 
+				"~/static/js/core/mungEventManager.js",
+
+				// Binders
+				"~/static/js/binders/mungTableBinder.js",
+
+				// Models
+				"~/static/js/models/mungGraphModel.js",
+
+				// Edit Graph
 				"~/static/js/editor/mungEditor.js",
 				"~/static/js/editor/mungEditorHtml.js",
 				"~/static/js/editor/mungEditorSql.js",
@@ -34,8 +42,8 @@ namespace GrowingData.Mung.Web {
 				"~/static/js/editor/autocomplete/autoCompleteSql.js",
 
 				"~/static/js/dashboard/mungDashboard.js",
-				"~/static/js/dashboard/mungViewEditor.js",
-				"~/static/js/dashboard/mungView.js"
+				"~/static/js/dashboard/mungGraphEditor.js",
+				"~/static/js/dashboard/mungGraph.js"
 			));
 
 
@@ -48,11 +56,15 @@ namespace GrowingData.Mung.Web {
 
 				"~/lib/codemirror-4.4/lib/codemirror.css",
 				"~/lib/codemirror-4.4/addon/hint/show-hint.css",
-				"~/static/css/theme/light-table.css",
-				"~/static/css/site.css",
+				"~/static/css/theme/editor/light-table.css",
+				"~/static/css/mung.css",
 				"~/static/css/dashboard.css",
-				"~/static/css/view.css",
-				"~/static/css/editor.css"
+				"~/static/css/graph.css",
+				"~/static/css/editor.css",
+
+
+				
+				"~/static/css/theme/tez.css"
 			));
 		}
 	}

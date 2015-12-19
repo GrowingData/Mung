@@ -1,104 +1,28 @@
 ﻿@{
-	ViewBag.Title = "Dashboard";
-
 
 	var dashboard = ViewBag.Dashboard as Dashboard;
-	var components = ViewBag.Components as List<Component>;
+	ViewBag.Title = dashboard.Title;
 
-	var componentsJson = Newtonsoft.Json.JsonConvert.SerializeObject(components);
+	var graphs = ViewBag.Graphs as List<Graph>;
+
+	var graphsJson = Newtonsoft.Json.JsonConvert.SerializeObject(graphs);
 	var dashboardJson = Newtonsoft.Json.JsonConvert.SerializeObject(dashboard);
 }
 
 <div class="dashboard ">
-	<h2>@dashboard.Title</h2>
+	<h2 class="dashboard-title">@dashboard.Title</h2>
 
-	<button type="button" class="btn btn-info btn-lg" id="add-view">Add view</button>
 
-	<div class="view-holder grid-stack">
+	<div class="graph-holder grid-stack">
+	
+	
 	</div>
-	@foreach (var c in components) {
-
-		<div class="component" id="component-@c.ComponentId"></div>
-		<script type="text/javascript">
-			MungOnLoader(function () {
 
 
-				$(".dashboard").mungDashboard( @Html.Raw(componentsJson));
-			});
-		</script>
-
-
-	}
-
-
-	<!-- Modal -->
-	<div id="edit-view" class="modal fade">
-		<div class="modal-dialog modal-lg">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
-						<span class="edit">Edit component</span>
-						<span class="add">Add component</span>
-
-					</h4>
-				</div>
-				<div class="modal-body">
-					<div class="preview component">
-
-
-					</div>
-
-
-					<label>SQL</label>
-					<div class="editor-sql">
-						<textarea class="text-sql"></textarea>
-					</div>
-
-					<label>HTML</label>
-					<div class="editor-html">
-						<textarea class="component-html"></textarea>
-					</div>
-
-
-
-					<label>Javascript</label>
-					<div class="editor-js">
-						<textarea class="component-js"></textarea>
-					</div>
-
-				</div>
-				<button type="button" class="btn btn-primary right btn-preview">Preview</button>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default left btn-close">Close</button>
-					<button type="button" class="btn btn-primary right btn-save">Save</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
 </div>
 
-<div class="view grid-stack-item template">
-	<div class="view-inner grid-stack-item-content">
-		<div class="view-header">
-		</div>
-
-		<div class="view-content ">
-
-		</div>
-		<div class="view-error">
-
-		</div>
-
-
-		<div class="view-footer">
-			<div class="status"></div>
-		</div>
-	</div>
-</div>
+@Html.Partial("Templates/GraphModal")
+@Html.Partial("Templates/Graph")
 
 
 <div class="defaults">
@@ -109,7 +33,7 @@ WHERE _at_ > DATEADD(DAY, -1, GETUTCDATE())
 	</pre>
 
 	<pre class="default-html">
-<div class="component-inner">
+<div class="graph-inner">
 	<small>Requests today</small>
 	<h2 class="requests-today"></h2>
 </div>
@@ -127,7 +51,7 @@ function(data, $component){
 	MungOnLoader(function () {
 		var dashboard = $(".dashboard").mungDashboard(
 			@Html.Raw( dashboardJson ),
-			@Html.Raw(componentsJson)
+			@Html.Raw(graphsJson)
 		);
 	});
 </script>

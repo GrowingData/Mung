@@ -1,19 +1,27 @@
 ﻿
 (function ($) {
 	// «
-	$.fn.mungDashboard = function (dashboard, views) {
+	$.fn.mungDashboard = function (dashboardModel, graphs) {
+		if (dashboardModel == null) throw "mungDashboard: dashboardModel is null";
+		if (graphs == null) throw "mungDashboard: graphs is null";
+
+
 		var self = this;
-		self.dashboard = dashboard;
+		self.dashboardModel = dashboardModel;
 
 
-		self.componentPopup = $("#edit-view").mungViewEditor(dashboard);
+		self.componentPopup = $("#edit-graph").mungGraphEditor(dashboardModel);
 
-		self.addComponentButton = $("#add-view").click(function () {
+		self.addComponentButton = $("#add-graph").click(function () {
 			self.componentPopup.create();
 		});
 
+		this.editGraph = function (graph) {
+			self.componentPopup.edit(graph.graphModel);
+		}
+
 		function bindGridStack() {
-			self.viewHolder = self.find(".view-holder")
+			self.graphHolder = self.find(".graph-holder")
 				.gridstack({
 					width: 12,
 					always_show_resize_handle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
@@ -22,9 +30,9 @@
 					}
 				});
 
-			self.grid = self.viewHolder.data("gridstack");
+			self.grid = self.graphHolder.data("gridstack");
 
-			self.viewHolder.on('change', function (e, items) {
+			self.graphHolder.on('change', function (e, items) {
 				for (var i = 0; i < items.length; i++) {
 					var item = items[i];
 					if (item._dirty) {
@@ -36,31 +44,17 @@
 				}
 			});
 
-			//self.viewHolder.on('resizestop', function (event, ui) {
-			//	var grid = this;
-			//	var element = event.target;
-			//	// Update the component
-			//	$(element).data("model").setDimensions(ui.position, ui.size);
-			//});
-
-			//self.viewHolder.on('dragstop', function (event, ui) {
-			//	var grid = this;
-			//	var element = event.target;
-			//	// Update the component
-			//	$(element).data("model").setPosition(ui.position);
-			//});
 		}
 
 		function addViews() {
-			_.each(views, function (v, k, l) {
-				var model = new mungViewModel(v, dashboard);
-				var view = $(".view.template")
+			_.each(graphs, function (graphData, key, l) {
+				var model = new mungGraphModel(graphData, dashboardModel);
+				var graph = $(".graph.template")
 					.clone()
 					.removeClass("template")
-					//.appendTo(self.viewHolder)
-					.mungView(model);
+					.mungGraph(model, self);
 
-				self.grid.add_widget(view, v.PositionX, v.PositionY, v.Width, v.Height);
+				self.grid.add_widget(graph, graphData.X, graphData.Y, graphData.Width, graphData.Height);
 			});
 
 		}
