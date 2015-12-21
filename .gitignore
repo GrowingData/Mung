@@ -6,3 +6,6 @@ packages
 /src/GrowingData.Mung/GrowingData.Mung.Server/data/**
 /src/GrowingData.Mung/GrowingData.Mung.Server/App_Data/**
 /src/GrowingData.Mung/GrowingData.Mung.Server/user/metric/**
+/src/GrowingData.Mung/GrowingData.Mung.Web/data/**
+/src/GrowingData.Mung/GrowingData.Mung.Web/App_Data/**
+/src/GrowingData.Mung/GrowingData.Mung.Web/user/metric/**
