@@ -1,6 +1,6 @@
 ﻿body {
 	background: #4e555f;
-	color: #9da1aa;
+	color: #CCD0D8;
 }
 
 .navbar-inverse {
@@ -29,7 +29,7 @@ input, select, textarea {
 }
 
 	.graph-inner .graph-footer {
-		background: #737780;
+		border-top: solid 1px #737982;
 	}
 
 	.graph-inner .graph-header {
@@ -105,9 +105,16 @@ hr {
 	border-color: #616873;
 }
 
+.mung-section {
+	background: #5f6670;
+}
+
+	.mung-section h2 {
+		color: #fff;
+	}
 
 table.mung-table {
-	border: solid 1px #737982 ;
+	border-bottom: solid 1px #737982;
 }
 
 	table.mung-table td {
@@ -122,6 +129,45 @@ table.mung-table {
 		color: #fff;
 	}
 
-	table.mung-table tr:nth-child(odd) {
+	table.mung-table tr:nth-child(odd),
+	.mung-section .section-inner > ul > li:nth-child(odd),
+	.mung-section > ul > li:nth-child(odd) {
 		background: #616973;
 	}
+
+ul.firehose > li {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.jsonview .null {
+	color: #414448;
+}
+
+.jsonview .num {
+	color: #87B56C;
+}
+
+
+.jsonview .string {
+	color: #659eeb;
+}
+
+.jsonview .bool {
+	color: #eb6c65;
+}
+
+
+.nvd3 text {
+	fill: #9DA1AA;
+}
+
+.nvd3 .tick line {
+	stroke: #9DA1AA;
+	stroke-opacity:0.15;
+}
+
+.nvd3 .nv-axis path.domain {
+	stroke: #9DA1AA;
+	stroke-opacity:0.15;
+}

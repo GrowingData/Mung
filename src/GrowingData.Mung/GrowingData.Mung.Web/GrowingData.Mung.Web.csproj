@@ -180,6 +180,8 @@
     <Compile Include="Areas\DashboardApi\DashboardApiAreaRegistration.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardCreateController.cs" />
     <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\FirehoseController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\HomeController.cs" />
     <Compile Include="Areas\Dashboard\DashboardsAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -652,6 +654,8 @@
     <Content Include="lib\underscore-1.8.3\underscore.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Dashboard\Views\Firehose\FirehoseDefault.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\DashboardList.cshtml" />
     <None Include="Scripts\jquery-2.1.4-vsdoc.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -673,20 +677,21 @@
     <Content Include="static\css\mung.css" />
     <Content Include="Areas\Dashboard\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Dashboard\Views\Dashboard\Dashboard.cshtml" />
     <Content Include="Areas\Auth\Views\web.config" />
     <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Auth\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Auth\Views\Join\Join.cshtml" />
-    <Content Include="Areas\Dashboard\Views\Dashboard\Default.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Home\Default.cshtml" />
     <Content Include="Areas\Auth\Views\Authenication\Login.cshtml" />
     <Content Include="Areas\ApiData\Views\web.config" />
     <Content Include="Areas\Dashboard\Views\Shared\Templates\Graph.cshtml" />
     <Content Include="Areas\Dashboard\Views\Shared\Templates\GraphModal.cshtml" />
     <Content Include="static\css\theme\editor\light-table.css" />
+    <Content Include="static\js\binders\mungChartDateLine.js" />
     <Content Include="static\js\binders\mungTableBinder.js" />
-    <Content Include="static\js\core\mungEventManager.js" />
+    <Content Include="static\js\core\MUNG.DataHelpers.js" />
+    <Content Include="static\js\core\MUNG.FirehoseSubscription.js" />
+    <Content Include="static\js\core\MUNG.EventManager.js" />
     <Content Include="static\js\editor\mungEditorJs.js" />
     <Content Include="static\js\editor\mungEditor.js" />
     <Content Include="static\js\editor\mungEditorSql.js" />
@@ -725,6 +730,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ApiData\Views\Schema\" />
     <Folder Include="Areas\ApiData\Views\Shared\" />
+    <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="Areas\Dashboard\Views\CreateDashboard\" />
     <Folder Include="src\EventWatchers\" />
   </ItemGroup>

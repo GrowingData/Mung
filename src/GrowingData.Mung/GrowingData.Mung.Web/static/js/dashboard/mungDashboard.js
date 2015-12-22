@@ -37,9 +37,16 @@
 					var item = items[i];
 					if (item._dirty) {
 						var model = item.el.data("model");
+						var ref = item.el.data("ref");
 						model.setDimensions(item.x, item.y, item.width, item.height);
 						console.log(item);
 						item._dirty = false;
+
+						// Changing the size of them element might necessitate
+						// a re-render (especially for d3 stuff)
+						if (ref.render) {
+							ref.render();
+						}
 					}
 				}
 			});

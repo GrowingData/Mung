@@ -1,0 +1,34 @@
+﻿@{
+	ViewBag.Title = "Dashboard";
+
+	var dashboards = ViewBag.Dashboards as List<Dashboard>;
+}
+<h1>Mung home</h1>
+
+
+
+
+<div class="row">
+	<div class="col-sm-12 col-md-6">
+		<div class="mung-section">
+			<div class="section-header">
+			<button type="button" class="btn btn-md green-bg pull-right" id="add-dashboard" >+ Add dashboard</button>
+			<h2> Dashboards</h2>
+			</div>
+
+			<ul class="link-list list-unstyled">
+				@foreach (var dashboard in dashboards) {
+					<li>
+						<a href="/dashboard/@dashboard.Url">@dashboard.Title</a>
+
+					</li>
+
+				}
+			</ul>
+
+
+		</div>
+
+	</div>
+
+</div>

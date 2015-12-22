@@ -13,15 +13,26 @@ namespace GrowingData.Mung.Web.Areas.Dashboards.Controllers {
 	public class DashboardController : Controller {
 		// GET: Dashboards/CreateDashboard
 		
-		[Route("")]
-		public ActionResult Default(string url) {
-			return View("Default");
-		}
+		
+		[Route("dashboards")]
+		public ActionResult ViewDashboardList(string url) {
+			var munger = SessionManager.CurrentMunger;
+			if (munger == null) {
+				return Redirect("/login");
+			}
 
+
+			ViewBag.Dashboards = Dashboard.List(SessionManager.CurrentMunger.MungerId);
+			return View("DashboardList");
+		}
 
 		[Route("dashboard/{*url}")]
 		public ActionResult ViewDashboard(string url) {
 
+			var munger = SessionManager.CurrentMunger;
+			if (munger == null) {
+				return Redirect("/login");
+			}
 
 			url = "/" + url;
 			using (var cn = Db.Metadata()) {

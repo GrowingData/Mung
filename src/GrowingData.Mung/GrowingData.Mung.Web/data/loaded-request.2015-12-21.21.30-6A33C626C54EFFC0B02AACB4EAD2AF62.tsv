@@ -1,4 +1,0 @@
-_Id_	_ParentId_	_At_	eternal_id	gooroo_id	host_name	is_dev	redis_count	redis_time	server	session_id	sql_count	sql_time	time	url	user_agent
-Key	Key	DateTime	Varchar	Integer	Varchar	Bit	Integer	Float	Varchar	Varchar	Integer	Float	Float	Varchar	Varchar
-"a7RPGJlkmEe1"		"2015-12-21T21:37:11.8886886Z"	"z9mafo32B2t9"	-1	"gooroo.gd"	"0"	0	0	"TEZSTATION"	"G6UfJsSAFIVo"	2	510.0292	1968.1126	"/"	"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
-"YyxVfx3SDY0g"		"2015-12-21T21:37:25.7484813Z"	"z9mafo32B2t9"	10000	"gooroo.gd"	"0"	8	53.003	"TEZSTATION"	"G6UfJsSAFIVo"	12	4735.271	16703.9554	"/dashboard"	"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"

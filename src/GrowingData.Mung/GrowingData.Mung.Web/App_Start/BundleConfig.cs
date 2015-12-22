@@ -13,9 +13,17 @@ namespace GrowingData.Mung.Web {
 				"~/Scripts/bootstrap.js",
 				"~/Scripts/respond.js",
 
+				"~/Scripts/jquery.signalR-2.2.0.js",
+
+
+				"~/lib/d3-3.5.12/d3.js",
+				"~/lib/novus-nvd3-v1.8.1-265/build/nv.d3.js",
+
+
 				"~/lib/jquery-ui-1.11.4.custom/jquery-ui.js",
 				"~/lib/underscore-1.8.3/underscore.js",
 				"~/lib/gridstack.js-0.2.3/src/gridstack.js",
+				"~/lib/jquery-jsonview-91fa851/dist/jquery.jsonview.js",
 
 				"~/lib/codemirror-4.4/lib/codemirror.js",
 				"~/lib/codemirror-4.4/mode/sql/sql.js",
@@ -26,9 +34,12 @@ namespace GrowingData.Mung.Web {
 				"~/lib/codemirror-4.4/addon/hint/javascript-hint.js",
 
 
-				"~/static/js/core/mungEventManager.js",
+				"~/static/js/core/MUNG.DataHelpers.js",
+				"~/static/js/core/MUNG.EventManager.js",
+				"~/static/js/core/MUNG.FirehoseSubscription.js",
 
 				// Binders
+				"~/static/js/binders/mungChartDateLine.js",
 				"~/static/js/binders/mungTableBinder.js",
 
 				// Models
@@ -51,12 +62,18 @@ namespace GrowingData.Mung.Web {
 			bundles.Add(new StyleBundle("~/bundles/css").Include(
 				"~/Content/bootstrap.css",
 
+
 				"~/lib/gridstack.js-0.2.3/src/gridstack.css",
 				"~/lib/font-awesome-4.5.0/css/font-awesome.css",
 
+				"~/lib/novus-nvd3-v1.8.1-265/build/nv.d3.css",
+
 				"~/lib/codemirror-4.4/lib/codemirror.css",
 				"~/lib/codemirror-4.4/addon/hint/show-hint.css",
+				"~/lib/jquery-jsonview-91fa851/dist/jquery.jsonview.css",
+
 				"~/static/css/theme/editor/light-table.css",
+
 				"~/static/css/mung.css",
 				"~/static/css/dashboard.css",
 				"~/static/css/graph.css",

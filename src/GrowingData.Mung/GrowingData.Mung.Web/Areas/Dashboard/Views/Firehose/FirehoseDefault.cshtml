@@ -1,0 +1,33 @@
+﻿@{
+	ViewBag.Title = "Firehose";
+
+}
+
+<div class="dashboard ">
+	<h2 class="dashboard-title">Firehose</h2>
+	<p>This page displays a real time stream of all events ingested into Mung</p>
+
+	<div class="mung-section">
+			<ul class="firehose list-unstyled"></ul>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	MungOnLoader(function () {
+		var ul = $(".firehose");
+		var subs = new MUNG.FirehoseSubscription({
+			filter: function (evt) { return true; },
+			received: function (evt) {
+				$("<li>")
+					.JSONView(
+						{
+							Type: evt.Type,
+							Source: evt.Source,
+							Data: evt.Data
+						} , { collapsed: true })
+					.prependTo(ul);
+			}
+		});
+	});
+</script>

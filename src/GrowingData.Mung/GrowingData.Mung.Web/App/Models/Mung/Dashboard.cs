@@ -36,6 +36,15 @@ namespace GrowingData.Mung.Web.Models {
 				return dashboard;
 			}
 		}
+		public static List<Dashboard> List(int mungerId) {
+			using (var cn = Db.Metadata()) {
+				var dashboards = cn.ExecuteAnonymousSql<Dashboard>(
+						@"SELECT * FROM mung.Dashboard",
+						 null
+					);
+				return dashboards;
+			}
+		}
 
 
 		public List<Graph> GetGraphs() {

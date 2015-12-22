@@ -8,7 +8,7 @@ function mungGraphModel(data, dashboard) {
 	self.data = data;
 
 
-	this.events = new mungEventManager();
+	this.events = new MUNG.EventManager();
 
 
 	this.saved = function (fn) {
